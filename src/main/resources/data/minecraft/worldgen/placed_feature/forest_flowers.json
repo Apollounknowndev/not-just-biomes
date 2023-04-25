@@ -1,0 +1,42 @@
+{
+  "feature": "minecraft:forest_flowers",
+  "placement": [
+    {
+      "type": "njb:module_based_count",
+      "module": "forest",
+      "module_enabled_count": 5,
+      "module_disabled_count": 1
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 7
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING"
+    },
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:clamped",
+        "value": {
+          "min_inclusive": 0,
+          "max_inclusive": 1,
+          "source": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": -3,
+              "max_inclusive": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

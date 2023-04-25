@@ -1,0 +1,114 @@
+{
+  "type": "njb:dungeon",
+  "config": {
+    "air_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:cave_air"
+      }
+    },
+    "floor_state": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "weight": 30,
+          "data": {
+            "Name": "minecraft:coarse_dirt"
+          }
+        },
+        {
+          "weight": 20,
+          "data": {
+            "Name": "minecraft:mossy_stone_bricks"
+          }
+        },
+        {
+          "weight": 15,
+          "data": {
+            "Name": "minecraft:stone_bricks"
+          }
+        },
+        {
+          "weight": 4,
+          "data": {
+            "Name": "minecraft:cracked_stone_bricks"
+          }
+        },
+        {
+          "weight": 1,
+          "data": {
+            "Name": "minecraft:chiseled_stone_bricks"
+          }
+        }
+      ]
+    },
+    "wall_state": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "weight": 25,
+          "data": {
+            "Name": "minecraft:mossy_stone_bricks"
+          }
+        },
+        {
+          "weight": 15,
+          "data": {
+            "Name": "minecraft:stone_bricks"
+          }
+        },
+        {
+          "weight": 4,
+          "data": {
+            "Name": "minecraft:cracked_stone_bricks"
+          }
+        },
+        {
+          "weight": 1,
+          "data": {
+            "Name": "minecraft:chiseled_stone_bricks"
+          }
+        }
+      ]
+    },
+    "mountain_override": true,
+    "x_radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 3,
+        "max_inclusive": 5
+      }
+    },
+    "z_radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 3,
+        "max_inclusive": 5
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 5,
+        "max_inclusive": 7
+      }
+    },
+    "max_chest_placement_attempts": 3,
+    "minimum_air_openings": 1,
+    "maximum_air_openings": 4,
+    "ceiling_feature": "njb:dungeon/decor/generic",
+    "ceiling_feature_placements": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 3,
+        "max_inclusive": 6
+      }
+    },
+    "spawner_mobs": [
+      "minecraft:zombie",
+      "minecraft:zombie",
+      "minecraft:skeleton",
+      "minecraft:spider"
+    ]
+  }
+}

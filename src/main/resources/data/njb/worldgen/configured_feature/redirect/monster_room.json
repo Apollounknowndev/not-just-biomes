@@ -1,0 +1,20 @@
+{
+  "type": "njb:config_based_selector",
+  "config": {
+    "module": "dungeon",
+    "module_enabled_feature": {
+      "feature": "njb:dungeon/dungeon_generic",
+      "placement": [
+        {
+          "type": "minecraft:surface_relative_threshold_filter",
+          "heightmap": "OCEAN_FLOOR_WG",
+          "max_inclusive": -8
+        }
+      ]
+    },
+    "module_disabled_feature": {
+      "feature": "minecraft:monster_room",
+      "placement": []
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "feature": "njb:redirect/patch_grass",
+  "placement": [
+    {
+      "type": "njb:module_based_count",
+      "module": "forest",
+      "module_enabled_count": 10,
+      "module_disabled_count": 2
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

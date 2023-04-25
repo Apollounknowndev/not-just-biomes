@@ -1,0 +1,63 @@
+{
+  "feature": "njb:swamp/mud_pool",
+  "placement": [
+    {
+      "type": "njb:config",
+      "module": "swamp",
+      "inverted": false
+    },
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 1,
+          "max_inclusive": 3
+        }
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "njb:noise_threshold",
+      "noise_provider": {
+        "seed": 2359705,
+        "noise": {
+          "firstOctave": -8,
+          "amplitudes": [
+            1,
+            1,
+            1
+          ]
+        },
+        "xz_scale": 0.75
+      },
+      "lower_threshold": -0.2,
+      "upper_threshold": 0.2,
+      "inside_bounds": 1,
+      "outside_bounds": 0
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING_NO_LEAVES"
+    },
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": 0,
+      "y_spread": 1
+    },
+    {
+      "type": "njb:height_filter",
+      "min_inclusive": {
+        "absolute": 62
+      },
+      "max_inclusive": {
+        "absolute": 68
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

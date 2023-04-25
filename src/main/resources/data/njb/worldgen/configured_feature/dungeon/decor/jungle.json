@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "features": [
+      {
+        "chance": 0.20,
+        "feature": {
+          "feature": "njb:dungeon/decor/piece/hanging_cobwebs",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.5,
+        "feature": {
+          "feature": "njb:dungeon/decor/piece/cave_vines",
+          "placement": []
+        }
+      }
+    ],
+    "default": {
+      "feature": "minecraft:spore_blossom",
+      "placement": []
+    }
+  }
+}

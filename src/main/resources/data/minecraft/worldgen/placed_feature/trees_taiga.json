@@ -1,0 +1,50 @@
+{
+  "feature": "minecraft:trees_taiga",
+  "placement": [
+    {
+      "type": "njb:noise_slope",
+      "noise_provider": {
+        "seed": -927168582,
+        "noise": {
+          "firstOctave": -7,
+          "amplitudes": [
+            1.6
+          ]
+        },
+        "xz_scale": 0.75
+      },
+      "noise_threshold": -1,
+      "slope": 5,
+      "count_offset": 2,
+      "discard_check_if_module_disabled": true,
+      "module": "taiga",
+      "module_disabled_count": {
+        "type": "minecraft:weighted_list",
+        "distribution": [
+          {
+            "weight": 9,
+            "data": 10
+          },
+          {
+            "weight": 1,
+            "data": 11
+          }
+        ]
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:surface_water_depth_filter",
+      "max_water_depth": 0
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "OCEAN_FLOOR"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

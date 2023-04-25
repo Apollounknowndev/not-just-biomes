@@ -1,0 +1,25 @@
+{
+  "type": "njb:rock",
+  "config": {
+    "state_provider": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "weight": 5,
+          "data": {
+            "Name": "minecraft:cobblestone"
+          }
+        },
+        {
+          "weight": 3,
+          "data": {
+            "Name": "minecraft:mossy_cobblestone"
+          }
+        }
+      ]
+    },
+    "rock_placements": 2,
+    "rock_size": 1.4,
+    "max_rock_radius": 2
+  }
+}

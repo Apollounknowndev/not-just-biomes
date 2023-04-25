@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "njb",
+	"version": "${version}",
+	"name": "Not Just Biomes",
+	"description": "A collection of modular enhancements to vanilla biomes and structures!",
+	"authors": [
+		"Apollo"
+	],
+	"license": "ARR",
+	"icon": "assets/njb/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"apollo.njb.NotJustBiomes"
+		],
+		"modmenu": [
+			"apollo.njb.config.ModMenuIntegration"
+		]
+	},
+	"accessWidener": "njb.accesswidener",
+	"mixins": [],
+	"depends": {
+		"fabricloader": ">=0.14.14",
+		"minecraft": ">=1.19.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

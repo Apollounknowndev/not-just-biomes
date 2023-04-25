@@ -1,0 +1,27 @@
+{
+  "feature": "njb:redirect/forest_rock",
+  "placement": [
+    {
+      "type": "njb:module_based_count",
+      "module": "taiga",
+      "module_enabled_count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 0,
+          "max_inclusive": 1
+        }
+      },
+      "module_disabled_count": 2
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

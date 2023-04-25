@@ -1,0 +1,14 @@
+{
+  "type": "njb:config_based_selector",
+  "config": {
+    "module": "swamp",
+    "module_enabled_feature": {
+      "feature": "njb:swamp/tree/tall_mangrove",
+      "placement": []
+    },
+    "module_disabled_feature": {
+      "feature": "minecraft:tall_mangrove",
+      "placement": []
+    }
+  }
+}

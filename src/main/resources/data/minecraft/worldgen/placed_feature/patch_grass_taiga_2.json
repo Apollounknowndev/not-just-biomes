@@ -1,0 +1,21 @@
+{
+  "feature": "minecraft:patch_taiga_grass",
+  "placement": [
+    {
+      "type": "njb:module_based_count",
+      "module": "taiga",
+      "module_enabled_count": 10,
+      "module_disabled_count": 1
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

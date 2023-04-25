@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:simple_random_selector",
+  "config": {
+    "features": [
+      {
+        "feature": "njb:shared/block_patch/coarse_dirt",
+        "placement": []
+      },
+      {
+        "feature": "njb:shared/block_patch/podzol",
+        "placement": []
+      },
+      {
+        "feature": "njb:shared/block_patch/gravel",
+        "placement": []
+      }
+    ]
+  }
+}

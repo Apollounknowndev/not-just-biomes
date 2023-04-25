@@ -1,0 +1,87 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "features": [
+      {
+        "chance": 0.6667,
+        "feature": {
+          "feature": {
+            "type": "njb:rock",
+            "config": {
+              "state_provider": {
+                "type": "minecraft:weighted_state_provider",
+                "entries": [
+                  {
+                    "weight": 2,
+                    "data": {
+                      "Name": "minecraft:cobblestone"
+                    }
+                  },
+                  {
+                    "weight": 3,
+                    "data": {
+                      "Name": "minecraft:mossy_cobblestone"
+                    }
+                  }
+                ]
+              },
+              "rock_placements": {
+                "type": "minecraft:uniform",
+                "value": {
+                  "min_inclusive": 2,
+                  "max_inclusive": 3
+                }
+              }
+            }
+          },
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.5,
+        "feature": {
+          "feature": {
+            "type": "njb:rock",
+            "config": {
+              "state_provider": {
+                "type": "minecraft:simple_state_provider",
+                "state": {
+                  "Name": "minecraft:andesite"
+                }
+              },
+              "rock_placements": {
+                "type": "minecraft:uniform",
+                "value": {
+                  "min_inclusive": 2,
+                  "max_inclusive": 3
+                }
+              }
+            }
+          },
+          "placement": []
+        }
+      }
+    ],
+    "default": {
+      "feature": {
+        "type": "njb:rock",
+        "config": {
+          "state_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:granite"
+            }
+          },
+          "rock_placements": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 2,
+              "max_inclusive": 3
+            }
+          }
+        }
+      },
+      "placement": []
+    }
+  }
+}

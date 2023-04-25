@@ -1,0 +1,14 @@
+{
+  "type": "njb:config_based_selector",
+  "config": {
+    "module": "forest",
+    "module_enabled_feature": {
+      "feature": "njb:forest/tree/fancy_001",
+      "placement": []
+    },
+    "module_disabled_feature": {
+      "feature": "minecraft:fancy_oak_bees_0002",
+      "placement": []
+    }
+  }
+}

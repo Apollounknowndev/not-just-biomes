@@ -1,0 +1,63 @@
+{
+  "type": "njb:dungeon",
+  "config": {
+    "air_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:cave_air"
+      }
+    },
+    "floor_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:stone"
+      }
+    },
+    "wall_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:stone"
+      }
+    },
+    "bandlands_override": true,
+    "x_radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 3,
+        "max_inclusive": 5
+      }
+    },
+    "z_radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 3,
+        "max_inclusive": 5
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 5,
+        "max_inclusive": 7
+      }
+    },
+    "max_chest_placement_attempts": 2,
+    "minimum_air_openings": 3,
+    "maximum_air_openings": 6,
+    "ceiling_feature": "njb:dungeon/decor/generic",
+    "ceiling_feature_placements": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 3,
+        "max_inclusive": 4
+      }
+    },
+    "spawner_mobs": [
+      "minecraft:husk",
+      "minecraft:husk",
+      "minecraft:husk",
+      "minecraft:skeleton",
+      "minecraft:spider"
+    ]
+  }
+}

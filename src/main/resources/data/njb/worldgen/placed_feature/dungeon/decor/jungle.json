@@ -1,0 +1,17 @@
+{
+  "feature": "njb:dungeon/decor/jungle",
+  "placement": [
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:has_sturdy_face",
+        "offset": [
+          0,
+          1,
+          0
+        ],
+        "direction": "down"
+      }
+    }
+  ]
+}

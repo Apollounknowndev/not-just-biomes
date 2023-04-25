@@ -1,0 +1,24 @@
+{
+  "feature": "njb:birch_forest/fallen_log",
+  "placement": [
+    {
+      "type": "njb:config",
+      "module": "birch_forest",
+      "inverted": false
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 20
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING_NO_LEAVES"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

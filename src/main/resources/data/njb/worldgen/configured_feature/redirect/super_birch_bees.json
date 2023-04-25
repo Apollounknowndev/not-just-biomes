@@ -1,0 +1,14 @@
+{
+  "type": "njb:config_based_selector",
+  "config": {
+    "module": "birch_forest",
+    "module_enabled_feature": {
+      "feature": "njb:birch_forest/tree/tall_1",
+      "placement": []
+    },
+    "module_disabled_feature": {
+      "feature": "minecraft:super_birch_bees",
+      "placement": []
+    }
+  }
+}

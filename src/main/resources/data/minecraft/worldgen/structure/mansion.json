@@ -1,0 +1,180 @@
+{
+  "type": "njb:mansion",
+  "biomes": "#minecraft:has_structure/woodland_mansion",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "room_templates": {
+    "mansion_processor": "njb:mansion/generic",
+    "functional_staircase": "njb:mansion/medium_functional/stairs",
+    "generic_staircase": "njb:mansion/medium_generic/stairs",
+    "walls": {
+      "entrance": "njb:mansion/walls/entrance",
+      "lower_wall": "njb:mansion/walls/wall_flat",
+      "upper_wall": "njb:mansion/walls/wall_window",
+      "corner_wall": "minecraft:woodland_mansion/wall_corner",
+      "small_wall": "njb:mansion/walls/small_wall",
+      "small_corner_wall": "minecraft:woodland_mansion/small_wall_corner",
+      "roof": "minecraft:woodland_mansion/roof",
+      "roof_corner": "minecraft:woodland_mansion/roof_corner",
+      "roof_inner_corner": "minecraft:woodland_mansion/roof_inner_corner",
+      "roof_side": "njb:mansion/walls/roof_front"
+    },
+    "first_floor": {
+      "small": [
+        "njb:mansion/small/flowers",
+        "njb:mansion/small/rails_and_ladders",
+        "njb:mansion/small/office",
+        "njb:mansion/small/checkerboard",
+        "njb:mansion/small/clock"
+      ],
+      "small_secret": [
+        "njb:mansion/small_secret/do_it",
+        "njb:mansion/small_secret/the_lie",
+        "njb:mansion/small_secret/order_of_the_stone",
+        "njb:mansion/small_secret/prison"
+      ],
+      "medium_functional": [
+        "njb:mansion/medium_functional/gray_banners",
+        "njb:mansion/medium_functional/farm_wheat",
+        "njb:mansion/medium_functional/forge",
+        "njb:mansion/medium_functional/saplings",
+        "njb:mansion/medium_functional/cursed_dark_oak",
+        "njb:mansion/medium_functional/mushroom_farm",
+        "njb:mansion/medium_functional/pumpkin_melon_farm",
+        "njb:mansion/medium_functional/storage"
+      ],
+      "medium_generic": [
+        "njb:mansion/medium_generic/jail_cell",
+        "njb:mansion/medium_generic/trap",
+        "njb:mansion/medium_generic/maze",
+        "njb:mansion/medium_generic/illager_shrine"
+      ],
+      "medium_secret": [
+        "njb:mansion/medium_secret/trans_rights_are_human_rights",
+        "njb:mansion/medium_secret/end_update_confirmed",
+        "njb:mansion/medium_secret/unknown",
+        "njb:mansion/medium_secret/update_aquatic"
+      ],
+      "large": [
+        "njb:mansion/large/jail_cells",
+        "njb:mansion/large/double_chest_storage",
+        "njb:mansion/large/illager_head",
+        "njb:mansion/large/pool"
+      ],
+      "large_secret": [
+        "njb:mansion/large_secret/legacy_village"
+      ]
+    },
+    "second_floor": {
+      "small": [
+        "njb:mansion/small/alliums",
+        "njb:mansion/small/bedroom_with_arch",
+        "njb:mansion/small/bedroom_with_fireplace",
+        "njb:mansion/small/library",
+        "njb:mansion/small/meeting_room"
+      ],
+      "small_secret": [
+        "njb:mansion/small_secret/do_it",
+        "njb:mansion/small_secret/the_lie",
+        "njb:mansion/small_secret/order_of_the_stone",
+        "njb:mansion/small_secret/prison"
+      ],
+      "medium_functional": [
+        "njb:mansion/medium_functional/dining_room",
+        "njb:mansion/medium_functional/twin_bedroom",
+        "njb:mansion/medium_functional/triplet_bedroom",
+        "njb:mansion/medium_functional/banners_blue",
+        "njb:mansion/medium_functional/banners_white",
+        "njb:mansion/medium_functional/archery_range"
+      ],
+      "medium_generic": [
+        "njb:mansion/medium_generic/master_bedroom",
+        "njb:mansion/medium_generic/bunk_bedroom",
+        "njb:mansion/medium_generic/mysterious_altar",
+        "njb:mansion/medium_generic/jellie_cat",
+        "njb:mansion/medium_generic/parrot",
+        "njb:mansion/medium_generic/chicken"
+      ],
+      "medium_secret": [
+        "njb:mansion/medium_secret/trans_rights_are_human_rights",
+        "njb:mansion/medium_secret/end_update_confirmed",
+        "njb:mansion/medium_secret/unknown",
+        "njb:mansion/medium_secret/update_aquatic"
+      ],
+      "large": [
+        "njb:mansion/large/meeting_tables",
+        "njb:mansion/large/dining_hall",
+        "njb:mansion/large/library",
+        "njb:mansion/large/map",
+        "njb:mansion/large/ravager_arena"
+      ],
+      "large_secret": [
+        "njb:mansion/large_secret/legacy_village"
+      ]
+    },
+    "third_floor": {
+      "small": [
+        "njb:mansion/small/alliums",
+        "njb:mansion/small/bedroom_with_arch",
+        "njb:mansion/small/bedroom_with_fireplace",
+        "njb:mansion/small/library",
+        "njb:mansion/small/meeting_room"
+      ],
+      "small_secret": [
+        "njb:mansion/small_secret/do_it",
+        "njb:mansion/small_secret/the_lie",
+        "njb:mansion/small_secret/order_of_the_stone",
+        "njb:mansion/small_secret/prison"
+      ],
+      "medium_functional": [
+        "njb:mansion/medium_functional/dining_room",
+        "njb:mansion/medium_functional/twin_bedroom",
+        "njb:mansion/medium_functional/triplet_bedroom",
+        "njb:mansion/medium_functional/banners_blue",
+        "njb:mansion/medium_functional/banners_white",
+        "njb:mansion/medium_functional/archery_range"
+      ],
+      "medium_generic": [
+        "njb:mansion/medium_generic/master_bedroom",
+        "njb:mansion/medium_generic/bunk_bedroom",
+        "njb:mansion/medium_generic/mysterious_altar",
+        "njb:mansion/medium_generic/jellie_cat",
+        "njb:mansion/medium_generic/parrot",
+        "njb:mansion/medium_generic/chicken"
+      ],
+      "medium_secret": [
+        "njb:mansion/medium_secret/trans_rights_are_human_rights",
+        "njb:mansion/medium_secret/end_update_confirmed",
+        "njb:mansion/medium_secret/unknown",
+        "njb:mansion/medium_secret/update_aquatic"
+      ],
+      "large": [
+        "njb:mansion/large/meeting_tables",
+        "njb:mansion/large/dining_hall",
+        "njb:mansion/large/library",
+        "njb:mansion/large/map",
+        "njb:mansion/large/ravager_arena"
+      ],
+      "large_secret": [
+        "njb:mansion/large_secret/legacy_village"
+      ]
+    }
+  },
+  "foundation_provider": {
+    "type": "minecraft:weighted_state_provider",
+    "entries": [
+      {
+        "weight": 1,
+        "data": {
+          "Name": "minecraft:mossy_cobblestone"
+        }
+      },
+      {
+        "weight": 4,
+        "data": {
+          "Name": "minecraft:cobblestone"
+        }
+      }
+    ]
+  }
+}
