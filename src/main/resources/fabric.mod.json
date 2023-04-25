@@ -12,10 +12,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"apollo.njb.NotJustBiomes"
+			"dev.worldgen.njb.NotJustBiomes"
 		],
 		"modmenu": [
-			"apollo.njb.config.ModMenuIntegration"
+			"dev.worldgen.njb.config.ModMenuIntegration"
 		]
 	},
 	"accessWidener": "njb.accesswidener",
