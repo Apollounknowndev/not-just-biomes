@@ -8,6 +8,11 @@
 		"Apollo"
 	],
 	"license": "ARR",
+	"contact": {
+		"homepage": "https://modrinth.com/mod/not-just-biomes",
+		"issues": "https://github.com/ApolloDatapacks/not-just-biomes/issues",
+		"source": "https://github.com/ApolloDatapacks/not-just-biomes/"
+	},
 	"icon": "assets/njb/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -26,9 +31,13 @@
 		"fabricloader": ">=0.14.14",
 		"minecraft": "~1.18.2",
 		"java": ">=17",
-		"fabric": "*"
+		"fabric": ">=0.76.0"
 	},
-	"suggests": {
-		"another-mod": "*"
-	}
+	"custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.com/invite/vFz67Pvceu"
+      }
+    }
+  }
 }
