@@ -8,11 +8,11 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.loot.LootTables;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
@@ -76,7 +76,7 @@ public class DungeonFeature extends Feature<DungeonConfig> {
                     }
                     if (Math.abs(x) == length || y == -1 || Math.abs(z) == width) {
                         if (blockPos2.getY() >= world.getBottomY() && !world.getBlockState(blockPos2.down()).getMaterial().isSolid()) {
-                            world.setBlockState(blockPos2, config.airState.get(random, blockPos2), Block.NOTIFY_LISTENERS);
+                            world.setBlockState(blockPos2, config.airState.getBlockState(random, blockPos2), Block.NOTIFY_LISTENERS);
                             continue;
                         }
                         if (!blockState.getMaterial().isSolid() || blockState.isOf(Blocks.CHEST)) continue;
@@ -86,22 +86,22 @@ public class DungeonFeature extends Feature<DungeonConfig> {
                             continue;
                         }
                         if (y == -1) {
-                            this.setBlockStateIf(world, blockPos2, config.floorState.get(random, blockPos2), predicate);
+                            this.setBlockStateIf(world, blockPos2, config.floorState.getBlockState(random, blockPos2), predicate);
                             continue;
                         }
-                        this.setBlockStateIf(world, blockPos2, config.wallState.get(random, blockPos2), predicate);
+                        this.setBlockStateIf(world, blockPos2, config.wallState.getBlockState(random, blockPos2), predicate);
                         continue;
                     }
                     if (blockState.isOf(Blocks.CHEST) || blockState.isOf(Blocks.SPAWNER)) continue;
-                    this.setBlockStateIf(world, blockPos2, config.airState.get(random, blockPos2), predicate);
+                    this.setBlockStateIf(world, blockPos2, config.airState.getBlockState(random, blockPos2), predicate);
                 }
             }
         }
         block6: for (x = 0; x < config.maxChestPlacementAttempts.get(random); ++x) {
             for (y = 0; y < 3; ++y) {
-                int u = blockPos.getX() + random.nextBetween(-length+1,length-1);
+                int u = blockPos.getX() + random.nextInt(2*length-2)-(length-1);
                 int v = blockPos.getY();
-                int w = blockPos.getZ() + random.nextBetween(-width+1,width-1);
+                int w = blockPos.getZ() + random.nextInt(2*width-2)-(width-1);
                 BlockPos blockPos3 = new BlockPos(u, v, w);
                 if (!world.isAir(blockPos3)) continue;
                 int aa = 0;
@@ -118,14 +118,14 @@ public class DungeonFeature extends Feature<DungeonConfig> {
         this.setBlockStateIf(world, blockPos, Blocks.SPAWNER.getDefaultState(), predicate);
         BlockEntity blockEntity = world.getBlockEntity(blockPos);
         if (blockEntity instanceof MobSpawnerBlockEntity mobSpawnerBlockEntity) {
-            mobSpawnerBlockEntity.setEntityType(config.spawnerMobs.getRandom(random).get().value(), random);
+            mobSpawnerBlockEntity.getLogic().setEntityId(config.spawnerMobs.getRandom(random).get().value());
         } else {
             NotJustBiomes.LOGGER.error("Failed to fetch mob spawner entity at ({}, {}, {})", blockPos.getX(), blockPos.getY(), blockPos.getZ());
         }
         for (int i = 0; i < config.ceilingFeaturePlacements.get(random); i++) {
-            int u = blockPos.getX() + random.nextBetween(-length+1,length-1);
+            int u = blockPos.getX() + random.nextInt(2*length-2)-(length-1);
             int v = blockPos.getY() + height;
-            int w = blockPos.getZ() + random.nextBetween(-width+1,width-1);
+            int w = blockPos.getZ() + random.nextInt(2*width-2)-(width-1);
             BlockPos blockPos3 = new BlockPos(u, v, w);
             config.ceilingFeature.value().generateUnregistered(world, context.getGenerator(), random, blockPos3);
         }

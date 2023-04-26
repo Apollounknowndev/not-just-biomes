@@ -5,10 +5,10 @@ import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
@@ -29,13 +29,13 @@ public class FallenLogFeature extends Feature<FallenLogConfig> {
         boolean canPlace = true;
         for (int i = 0; i < config.logLength.get(random); ++i) {
             BlockPos relativePos = blockPos.offset(direction, i);
-            canPlace = world.getBlockState(relativePos).isReplaceable() && world.getBlockState(relativePos.offset(Direction.DOWN, 1)).isIn(BlockTags.DIRT);
+            canPlace = world.getBlockState(relativePos).getMaterial().isReplaceable() && world.getBlockState(relativePos.offset(Direction.DOWN, 1)).isIn(BlockTags.DIRT);
         }
         if (canPlace) {
             for (int i = 0; i < config.logLength.get(random); ++i) {
                 BlockPos relativePos = blockPos.offset(direction, i);
-                BlockState logState = config.logProvider.get(random, relativePos).with(PillarBlock.AXIS, axis);
-                BlockState aboveLogState = config.aboveLogProvider.get(random, relativePos.up());
+                BlockState logState = config.logProvider.getBlockState(random, relativePos).with(PillarBlock.AXIS, axis);
+                BlockState aboveLogState = config.aboveLogProvider.getBlockState(random, relativePos.up());
                 world.setBlockState(relativePos, logState, Block.NOTIFY_LISTENERS);
                 if (random.nextFloat() < config.aboveLogPlacementChance) {
                     world.setBlockState(relativePos.up(), aboveLogState, Block.NOTIFY_LISTENERS);

@@ -90,17 +90,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 30,
-          "name": "minecraft:goat_horn",
-          "functions": [
-            {
-              "function": "minecraft:set_instrument",
-              "options": "#minecraft:screaming_goat_horns"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "weight": 25,
           "name": "minecraft:crossbow",
           "functions": [

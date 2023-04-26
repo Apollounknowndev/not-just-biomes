@@ -8,14 +8,13 @@ import dev.worldgen.njb.worldgen.feature.config.ConfigBasedSelectorConfig;
 import dev.worldgen.njb.worldgen.feature.config.DungeonConfig;
 import dev.worldgen.njb.worldgen.feature.config.FallenLogConfig;
 import dev.worldgen.njb.worldgen.feature.config.RockConfig;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.Feature;
 import static dev.worldgen.njb.registry.RegistryUtils.register;
 
 public class NJBConfiguredFeatures {
 
-    public static final Registry<Feature<?>> registry = Registries.FEATURE;
+    public static final Registry<Feature<?>> registry = Registry.FEATURE;
     public static final Feature<DungeonConfig> DUNGEON = register(
         registry, "dungeon", new DungeonFeature(DungeonConfig.CODEC)
     );

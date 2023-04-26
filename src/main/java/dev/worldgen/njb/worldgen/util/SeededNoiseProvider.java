@@ -3,6 +3,7 @@ package dev.worldgen.njb.worldgen.util;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
+import net.minecraft.util.registry.RegistryEntry;
 
 
 public class SeededNoiseProvider {
@@ -19,12 +20,12 @@ public class SeededNoiseProvider {
             })
         ).apply(instance, SeededNoiseProvider::new);
     });
-    public final DoublePerlinNoiseSampler.NoiseParameters noiseParameters;
+    public final RegistryEntry<DoublePerlinNoiseSampler.NoiseParameters> noiseParameters;
     public final long seed;
     public final float xz_scale;
     public final float y_scale;
 
-    private SeededNoiseProvider(long seed, DoublePerlinNoiseSampler.NoiseParameters noiseParameters, float xz_scale, float y_scale) {
+    private SeededNoiseProvider(long seed, RegistryEntry<DoublePerlinNoiseSampler.NoiseParameters> noiseParameters, float xz_scale, float y_scale) {
         this.seed = seed;
         this.noiseParameters = noiseParameters;
         this.xz_scale = xz_scale;

@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.ForestRockFeature;
@@ -32,11 +32,11 @@ public class RockFeature extends Feature<RockConfig> {
         }
         for (int i = 0; i < config.rockPlacements.get(random); ++i) {
             for (BlockPos blockPos2 : BlockPos.iterate(blockPos.add(-2, -2, -2), blockPos.add(2, 2, 2))) {
-                double j = 2.25+((double)random.nextBetween(-2, 2)/5);
-                if (blockPos2.getSquaredDistance(blockPos) <= j && (world.getBlockState(blockPos2) == Blocks.GRASS_BLOCK.getDefaultState() || world.getBlockState(blockPos2).isReplaceable())) {
-                    world.setBlockState(blockPos2, config.state.get(random, blockPos), Block.NOTIFY_LISTENERS);
-                    if (blockPos2.up().getSquaredDistance(blockPos) > j && world.getBlockState(blockPos2.up()).isReplaceable() && config.aboveRockState.isPresent() && random.nextDouble() < config.aboveRockPlacementChance) {
-                        world.setBlockState(blockPos2.up(), config.aboveRockState.get().get(random, blockPos), Block.NOTIFY_LISTENERS);
+                double j = 2.25+((double)(random.nextInt(5)- 2)/5);
+                if (blockPos2.getSquaredDistance(blockPos) <= j && (world.getBlockState(blockPos2) == Blocks.GRASS_BLOCK.getDefaultState() || world.getBlockState(blockPos2).getMaterial().isReplaceable())) {
+                    world.setBlockState(blockPos2, config.state.getBlockState(random, blockPos), Block.NOTIFY_LISTENERS);
+                    if (blockPos2.up().getSquaredDistance(blockPos) > j && world.getBlockState(blockPos2.up()).getMaterial().isReplaceable() && config.aboveRockState.isPresent() && random.nextDouble() < config.aboveRockPlacementChance) {
+                        world.setBlockState(blockPos2.up(), config.aboveRockState.get().getBlockState(random, blockPos), Block.NOTIFY_LISTENERS);
                     }
                 }
             }

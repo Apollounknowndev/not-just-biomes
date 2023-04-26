@@ -1,9 +1,9 @@
 {
   "type": "njb:mansion",
   "biomes": "#minecraft:has_structure/woodland_mansion",
-  "step": "surface_structures",
   "spawn_overrides": {},
-  "room_templates": {
+  "config":{
+    "room_templates": {
     "mansion_processor": "njb:mansion/generic",
     "functional_staircase": "njb:mansion/medium_functional/stairs",
     "generic_staircase": "njb:mansion/medium_generic/stairs",
@@ -159,22 +159,6 @@
         "njb:mansion/large_secret/legacy_village"
       ]
     }
-  },
-  "foundation_provider": {
-    "type": "minecraft:weighted_state_provider",
-    "entries": [
-      {
-        "weight": 1,
-        "data": {
-          "Name": "minecraft:mossy_cobblestone"
-        }
-      },
-      {
-        "weight": 4,
-        "data": {
-          "Name": "minecraft:cobblestone"
-        }
-      }
-    ]
+  }
   }
 }

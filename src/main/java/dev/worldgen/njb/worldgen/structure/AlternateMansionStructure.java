@@ -4,80 +4,81 @@ import dev.worldgen.njb.config.ConfigHandler;
 import dev.worldgen.njb.structure.AlternateMansionGenerator;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.structure.StructurePiecesCollector;
-import net.minecraft.structure.StructurePiecesList;
-import net.minecraft.structure.WoodlandMansionGenerator;
+import net.minecraft.structure.*;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.biome.source.BiomeCoords;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
-import net.minecraft.world.gen.structure.Structure;
-import net.minecraft.world.gen.structure.StructureType;
-
+import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.gen.random.AtomicSimpleRandom;
+import net.minecraft.world.gen.random.ChunkRandom;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class AlternateMansionStructure extends Structure {
-    public static final Codec<AlternateMansionStructure> CODEC = RecordCodecBuilder.create((instance) -> {
-        return instance.group(
-            Structure.configCodecBuilder(instance),
-            MansionTemplates.ROOM_CODEC.fieldOf("room_templates").forGetter((mansion) -> {
-                return mansion.roomTemplates;
-            }),
-            BlockStateProvider.TYPE_CODEC.fieldOf("foundation_provider").forGetter((mansion) -> {
-                return mansion.foundationProvider;
-            })
-        ).apply(instance, AlternateMansionStructure::new);
-    });
-    public final MansionTemplates roomTemplates;
+public class AlternateMansionStructure extends StructureFeature<AlternateMansionStructureConfig> {
 
-    public final BlockStateProvider foundationProvider;
-
-    public AlternateMansionStructure(Structure.Config config, MansionTemplates roomTemplates, BlockStateProvider foundationProvider) {
-        super(config);
-        this.roomTemplates = roomTemplates;
-        this.foundationProvider = foundationProvider;
+    public AlternateMansionStructure(Codec<AlternateMansionStructureConfig> configCodec) {
+        super(configCodec, AlternateMansionStructure::addPieces, AlternateMansionStructure::postPlace);
     }
 
-    public Optional<Structure.StructurePosition> getStructurePosition(Structure.Context context) {
-        BlockRotation blockRotation = BlockRotation.random(context.random());
-        BlockPos blockPos = this.getShiftedPos(context, blockRotation);
-        return blockPos.getY() < 60 ? Optional.empty() : Optional.of(new Structure.StructurePosition(blockPos, (collector) -> {
-            this.addPieces(collector, context, blockPos, blockRotation);
-        }));
-    }
+    private static Optional<StructurePiecesGenerator<AlternateMansionStructureConfig>> addPieces(StructureGeneratorFactory.Context<AlternateMansionStructureConfig> context) {
+        ChunkRandom chunkRandom = new ChunkRandom(new AtomicSimpleRandom(0L));
+        chunkRandom.setCarverSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
+        BlockRotation blockRotation = BlockRotation.random(chunkRandom);
+        int i = 5;
+        int j = 5;
+        if (blockRotation == BlockRotation.CLOCKWISE_90) {
+            i = -5;
+        } else if (blockRotation == BlockRotation.CLOCKWISE_180) {
+            i = -5;
+            j = -5;
+        } else if (blockRotation == BlockRotation.COUNTERCLOCKWISE_90) {
+            j = -5;
+        }
 
-    private void addPieces(StructurePiecesCollector collector, Structure.Context context, BlockPos pos, BlockRotation rotation) {
-        if (ConfigHandler.getConfigValue("mansion")) {
-            List<AlternateMansionGenerator.Piece> list = Lists.newLinkedList();
-            AlternateMansionGenerator.addPieces(context.structureTemplateManager(), pos, rotation, list, context.random(), this.roomTemplates);
-            Objects.requireNonNull(collector);
-            list.forEach(collector::addPiece);
+        int k = context.chunkPos().getOffsetX(7);
+        int l = context.chunkPos().getOffsetZ(7);
+        int[] is = context.getCornerHeights(k, i, l, j);
+        int m = Math.min(Math.min(is[0], is[1]), Math.min(is[2], is[3]));
+        if (m < 60) {
+            return Optional.empty();
+        } else if (!context.validBiome().test(context.chunkGenerator().getBiomeForNoiseGen(BiomeCoords.fromBlock(k), BiomeCoords.fromBlock(is[0]), BiomeCoords.fromBlock(l)))) {
+            return Optional.empty();
         } else {
-            List<WoodlandMansionGenerator.Piece> list = Lists.newLinkedList();
-            WoodlandMansionGenerator.addPieces(context.structureTemplateManager(), pos, rotation, list, context.random());
-            Objects.requireNonNull(collector);
-            list.forEach(collector::addPiece);
+            BlockPos blockPos = new BlockPos(context.chunkPos().getCenterX(), m + 1, context.chunkPos().getCenterZ());
+            return Optional.of((collector, contextx) -> {
+                if (ConfigHandler.getConfigValue("mansion")) {
+                    List<AlternateMansionGenerator.Piece> list = Lists.newLinkedList();
+                    AlternateMansionGenerator.addPieces(contextx.structureManager(), blockPos, blockRotation, list, chunkRandom, contextx.config().roomTemplates);
+                    Objects.requireNonNull(collector);
+                    list.forEach(collector::addPiece);
+                } else {
+                    List<WoodlandMansionGenerator.Piece> list = Lists.newLinkedList();
+                    WoodlandMansionGenerator.addPieces(contextx.structureManager(), blockPos, blockRotation, list, chunkRandom);
+                    Objects.requireNonNull(collector);
+                    list.forEach(collector::addPiece);
+                }
+            });
         }
     }
 
-    public void postPlace(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox box, ChunkPos chunkPos, StructurePiecesList pieces) {
+    public static void postPlace(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, StructurePiecesList pieces) {
         BlockPos.Mutable mutable = new BlockPos.Mutable();
         BlockBox blockBox = pieces.getBoundingBox();
         boolean moduleEnabled = ConfigHandler.getConfigValue("mansion");
         int i = world.getBottomY();
         int j = blockBox.getMinY();
 
-        for(int k = box.getMinX(); k <= box.getMaxX(); ++k) {
-            for(int l = box.getMinZ(); l <= box.getMaxZ(); ++l) {
+        for(int k = chunkBox.getMinX(); k <= chunkBox.getMaxX(); ++k) {
+            for(int l = chunkBox.getMinZ(); l <= chunkBox.getMaxZ(); ++l) {
                 mutable.set(k, j, l);
                 if (!world.isAir(mutable) && blockBox.contains(mutable) && pieces.contains(mutable)) {
                     for(int m = j - 1; m > i; --m) {
@@ -85,15 +86,14 @@ public class AlternateMansionStructure extends Structure {
                         if (!world.isAir(mutable) && !world.getBlockState(mutable).getMaterial().isLiquid()) {
                             break;
                         }
-
-                        world.setBlockState(mutable, moduleEnabled ? foundationProvider.get(random, new BlockPos(k, m, l)) : Blocks.COBBLESTONE.getDefaultState(), 2);
+                        // TODO: Use the foundationProvider
+                        BlockState secondaryBlockState = moduleEnabled ?  Blocks.MOSSY_COBBLESTONE.getDefaultState() : Blocks.COBBLESTONE.getDefaultState();
+                        world.setBlockState(mutable, random.nextInt(5) == 1 ? secondaryBlockState : Blocks.COBBLESTONE.getDefaultState(), 2);
                     }
                 }
             }
         }
     }
 
-    public StructureType<?> getType() {
-        return StructureType.WOODLAND_MANSION;
-    }
+
 }

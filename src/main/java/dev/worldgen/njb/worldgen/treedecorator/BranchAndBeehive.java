@@ -11,10 +11,17 @@ import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
+import net.minecraft.predicate.block.BlockStatePredicate;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.BiConsumer;
+
+import net.minecraft.world.TestableWorld;
+import net.minecraft.world.gen.blockpredicate.BlockPredicate;
 import net.minecraft.world.gen.treedecorator.TreeDecorator;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 
@@ -48,10 +55,8 @@ public class BranchAndBeehive extends TreeDecorator {
     }
 
     @Override
-    public void generate(TreeDecorator.Generator generator) {
-        Random random = generator.getRandom();
+    public void generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions) {
         if (random.nextFloat() < this.branchProbability) {
-            ObjectArrayList<BlockPos> logPositions = generator.getLogPositions();
             logPositions.remove(logPositions.size()-1);
             for(int i = 0; i < 3; i++) {
                 if (logPositions.size() <= 1) break;
@@ -61,16 +66,16 @@ public class BranchAndBeehive extends TreeDecorator {
             if (logPositions.size() == 0) return;
             Direction branchDirection = Direction.fromHorizontal(random.nextInt(4));
             BlockPos pos = logPositions.get(random.nextInt(logPositions.size())).offset(branchDirection);
-            if(generator.isAir(pos)) {
+            if(world.testBlockState(pos, BlockStatePredicate.forBlock(Blocks.AIR))) {
                 Direction.Axis axis = branchDirection.getAxis();
-                generator.replace(pos, branchProvider.with(PillarBlock.AXIS, axis));
+                replacer.accept(pos, branchProvider.with(PillarBlock.AXIS, axis));
                 if(random.nextFloat() < this.beehiveProbability){
-                    generator.replace(pos.down(), Blocks.BEE_NEST.getDefaultState().with(BeehiveBlock.FACING, branchDirection));
-                    generator.getWorld().getBlockEntity(pos.down(), BlockEntityType.BEEHIVE).ifPresent(blockEntity -> {
+                    replacer.accept(pos.down(), Blocks.BEE_NEST.getDefaultState().with(BeehiveBlock.FACING, branchDirection));
+                    world.getBlockEntity(pos.down(), BlockEntityType.BEEHIVE).ifPresent(blockEntity -> {
                         int i = 2 + random.nextInt(2);
                         for (int j = 0; j < i; ++j) {
                             NbtCompound nbtCompound = new NbtCompound();
-                            nbtCompound.putString("id", Registries.ENTITY_TYPE.getId(EntityType.BEE).toString());
+                            nbtCompound.putString("id", Registry.ENTITY_TYPE.getId(EntityType.BEE).toString());
                             blockEntity.addBee(nbtCompound, random.nextInt(599), false);
                         }
                     });

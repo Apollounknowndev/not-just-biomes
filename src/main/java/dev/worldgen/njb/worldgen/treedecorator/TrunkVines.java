@@ -4,8 +4,14 @@ import dev.worldgen.njb.registry.NJBTreeDecorators;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.*;
+import net.minecraft.predicate.block.BlockStatePredicate;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.BiConsumer;
+
+import net.minecraft.world.TestableWorld;
 import net.minecraft.world.gen.treedecorator.TreeDecorator;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 public class TrunkVines extends TreeDecorator {
@@ -28,26 +34,25 @@ public class TrunkVines extends TreeDecorator {
     }
 
     @Override
-    public void generate(Generator generator) {
-        Random random = generator.getRandom();
+    public void generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions) {
         if (this.probability > 0.0F && random.nextFloat() < this.probability) {
-            generator.getLogPositions().forEach((pos) -> {
+            logPositions.forEach((pos) -> {
                 BlockPos blockPos;
                 blockPos = pos.west();
-                if (generator.isAir(blockPos)) {
-                    generator.replaceWithVine(blockPos, VineBlock.EAST);
+                if (world.testBlockState(blockPos, BlockStatePredicate.forBlock(Blocks.AIR))) {
+                    replacer.accept(blockPos, Blocks.VINE.getDefaultState().with(VineBlock.EAST, true));
                 }
                 blockPos = pos.east();
-                if (generator.isAir(blockPos)) {
-                    generator.replaceWithVine(blockPos, VineBlock.WEST);
+                if (world.testBlockState(blockPos, BlockStatePredicate.forBlock(Blocks.AIR))) {
+                    replacer.accept(blockPos, Blocks.VINE.getDefaultState().with(VineBlock.WEST, true));
                 }
                 blockPos = pos.north();
-                if (generator.isAir(blockPos)) {
-                    generator.replaceWithVine(blockPos, VineBlock.SOUTH);
+                if (world.testBlockState(blockPos, BlockStatePredicate.forBlock(Blocks.AIR))) {
+                    replacer.accept(blockPos, Blocks.VINE.getDefaultState().with(VineBlock.SOUTH, true));
                 }
                 blockPos = pos.south();
-                if (generator.isAir(blockPos)) {
-                    generator.replaceWithVine(blockPos, VineBlock.NORTH);
+                if (world.testBlockState(blockPos, BlockStatePredicate.forBlock(Blocks.AIR))) {
+                    replacer.accept(blockPos, Blocks.VINE.getDefaultState().with(VineBlock.NORTH, true));
                 }
             });
         }

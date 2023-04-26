@@ -4,7 +4,7 @@ import dev.worldgen.njb.config.ConfigHandler;
 import dev.worldgen.njb.worldgen.feature.config.ConfigBasedSelectorConfig;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;

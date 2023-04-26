@@ -9,11 +9,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
-import net.minecraft.util.math.random.CheckedRandom;
-import net.minecraft.util.math.random.ChunkRandom;
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
 import net.minecraft.world.gen.placementmodifier.AbstractCountPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.PlacementModifierType;
+import net.minecraft.world.gen.random.AtomicSimpleRandom;
+import net.minecraft.world.gen.random.ChunkRandom;
+
 public class NoiseSlopePlacementModifier extends AbstractCountPlacementModifier {
     public static final Codec<NoiseSlopePlacementModifier> MODIFIER_CODEC = RecordCodecBuilder.create((instance) -> {
         return instance.group(
@@ -44,7 +45,7 @@ public class NoiseSlopePlacementModifier extends AbstractCountPlacementModifier 
     private final IntProvider moduleDisabledCount;
 
     private NoiseSlopePlacementModifier(SeededNoiseProvider noiseProvider, double noiseThreshold, int noiseCountMultiplier, int countOffset, boolean discardCheckIfModuleDisabled, String module, IntProvider moduleDisabledCount) {
-        this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new CheckedRandom(noiseProvider.seed)), noiseProvider.noiseParameters);
+        this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new AtomicSimpleRandom(noiseProvider.seed)), noiseProvider.noiseParameters.value());
         this.noiseProvider = noiseProvider;
         this.noiseThreshold = noiseThreshold;
         this.noiseCountMultiplier = noiseCountMultiplier;

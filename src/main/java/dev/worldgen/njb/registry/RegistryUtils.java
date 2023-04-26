@@ -1,7 +1,7 @@
 package dev.worldgen.njb.registry;
 
 import dev.worldgen.njb.NotJustBiomes;
-import net.minecraft.registry.Registry;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class RegistryUtils {

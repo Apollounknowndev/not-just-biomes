@@ -14,9 +14,9 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.registry.DynamicRegistryManager;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.structure.*;
 import net.minecraft.structure.processor.BlockIgnoreStructureProcessor;
 import net.minecraft.structure.processor.StructureProcessor;
@@ -26,19 +26,17 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
-import net.minecraft.util.math.random.Random;
+
 import net.minecraft.world.ServerWorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class AlternateMansionGenerator {
     public AlternateMansionGenerator() {
     }
 
-    public static void addPieces(StructureTemplateManager manager, BlockPos pos, BlockRotation rotation, List<AlternateMansionGenerator.Piece> pieces, Random random, MansionTemplates roomTemplates) {
+    public static void addPieces(StructureManager manager, BlockPos pos, BlockRotation rotation, List<AlternateMansionGenerator.Piece> pieces, Random random, MansionTemplates roomTemplates) {
         AlternateMansionGenerator.MansionParameters mansionParameters = new AlternateMansionGenerator.MansionParameters(random);
         AlternateMansionGenerator.LayoutGenerator layoutGenerator = new AlternateMansionGenerator.LayoutGenerator(manager, random, roomTemplates);
         layoutGenerator.generate(pos, rotation, pieces, mansionParameters);
@@ -249,7 +247,7 @@ public class AlternateMansionGenerator {
                 }
             }
 
-            Util.shuffle(objectArrayList, this.random);
+            Collections.shuffle(objectArrayList, this.random);
             i = 10;
             ObjectListIterator var19 = objectArrayList.iterator();
 
@@ -333,13 +331,13 @@ public class AlternateMansionGenerator {
     }
 
     private static class LayoutGenerator {
-        private final StructureTemplateManager manager;
+        private final StructureManager manager;
         private final Random random;
         private final MansionTemplates roomTemplates;
         private int entranceI;
         private int entranceJ;
 
-        public LayoutGenerator(StructureTemplateManager manager, Random random, MansionTemplates roomTemplates) {
+        public LayoutGenerator(StructureManager manager, Random random, MansionTemplates roomTemplates) {
             this.manager = manager;
             this.random = random;
             this.roomTemplates = roomTemplates;
@@ -721,7 +719,7 @@ public class AlternateMansionGenerator {
                 smallRoom = getRoom(floorTemplates.smallSecret, this.random);
             }
             BlockRotation blockRotation = BlockRotation.NONE.rotate(rotateFromDirection(direction)).rotate(BlockRotation.COUNTERCLOCKWISE_90);
-            BlockPos blockPos = StructureTemplate.applyTransformedOffset(new BlockPos(1, 0, 0), BlockMirror.NONE, blockRotation, 7, 7);
+            BlockPos blockPos = Structure.applyTransformedOffset(new BlockPos(1, 0, 0), BlockMirror.NONE, blockRotation, 7, 7);
             blockRotation = blockRotation.rotate(rotation);
             blockPos = blockPos.rotate(rotation);
             BlockPos blockPos2 = pos.add(blockPos.getX(), 0, blockPos.getZ());
@@ -908,39 +906,39 @@ public class AlternateMansionGenerator {
     }
 
     public static class Piece extends SimpleStructurePiece {
-        public Piece(MansionTemplates mansionTemplates, StructureTemplateManager manager, String template, BlockPos pos, BlockRotation rotation) {
+        public Piece(MansionTemplates mansionTemplates, StructureManager manager, String template, BlockPos pos, BlockRotation rotation) {
             this(mansionTemplates, manager, new Identifier("woodland_mansion/"+template), pos, rotation, BlockMirror.NONE);
         }
 
-        public Piece(MansionTemplates mansionTemplates, StructureTemplateManager manager, Identifier template, BlockPos pos, BlockRotation rotation) {
+        public Piece(MansionTemplates mansionTemplates, StructureManager manager, Identifier template, BlockPos pos, BlockRotation rotation) {
             this(mansionTemplates, manager, template, pos, rotation, BlockMirror.NONE);
         }
 
-        public Piece(MansionTemplates mansionTemplates, StructureTemplateManager manager, Identifier template, BlockPos pos, BlockRotation rotation, BlockMirror mirror) {
+        public Piece(MansionTemplates mansionTemplates, StructureManager manager, Identifier template, BlockPos pos, BlockRotation rotation, BlockMirror mirror) {
             super(NJBStructurePieces.ALTERNATE_MANSION_PIECE, 0, manager, template, String.valueOf(template), createPlacementData(mansionTemplates, mirror, rotation), pos);
         }
 
-        public Piece(StructureTemplateManager manager, DynamicRegistryManager dynamicRegistryManager, NbtCompound nbt) {
+        public Piece(StructureManager manager, DynamicRegistryManager dynamicRegistryManager, NbtCompound nbt) {
             super(NJBStructurePieces.ALTERNATE_MANSION_PIECE, nbt, manager, (id) -> {
                 return createPlacementData(dynamicRegistryManager, BlockMirror.valueOf(nbt.getString("Mi")), BlockRotation.valueOf(nbt.getString("Rot")));
             });
         }
 
         public Piece(StructureContext structureContext, NbtCompound nbtCompound) {
-            this(structureContext.structureTemplateManager(), structureContext.registryManager(), nbtCompound);
+            this(structureContext.structureManager(), structureContext.registryManager(), nbtCompound);
         }
 
         private static StructurePlacementData createPlacementData(MansionTemplates mansionTemplates,  BlockMirror mirror, BlockRotation rotation) {
-            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(true).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(false).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
             List<StructureProcessor> processors = mansionTemplates.mansionProcessor.value().getList();
             processors.forEach(structurePlacementData::addProcessor);
             return structurePlacementData;
         }
 
         private static StructurePlacementData createPlacementData(DynamicRegistryManager dynamicRegistryManager, BlockMirror mirror, BlockRotation rotation) {
-            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(true).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
-            RegistryKey<StructureProcessorList> processorList = RegistryKey.of(RegistryKeys.PROCESSOR_LIST, new Identifier(NotJustBiomes.MOD_ID, "mansion/generic"));
-            List<StructureProcessor> processors = dynamicRegistryManager.get(RegistryKeys.PROCESSOR_LIST).get(processorList).getList();
+            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(false).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+            RegistryKey<StructureProcessorList> processorList = RegistryKey.of(Registry.STRUCTURE_PROCESSOR_LIST_KEY, new Identifier(NotJustBiomes.MOD_ID, "mansion/generic"));
+            List<StructureProcessor> processors = dynamicRegistryManager.get(Registry.STRUCTURE_PROCESSOR_LIST_KEY).get(processorList).getList();
             processors.forEach(structurePlacementData::addProcessor);
             return structurePlacementData;
         }
@@ -976,18 +974,9 @@ public class AlternateMansionGenerator {
                     case "Warrior":
                         list.add(EntityType.VINDICATOR.create(world.toServerWorld()));
                         break;
-                    case "Group of Allays":
-                        int i = world.getRandom().nextInt(3) + 1;
-                        int j = 0;
-
-                        while(true) {
-                            if (j >= i) {
-                                break label60;
-                            }
-
-                            list.add(EntityType.ALLAY.create(world.toServerWorld()));
-                            ++j;
-                        }
+                    case "Prisoner":
+                        list.add(EntityType.VILLAGER.create(world.toServerWorld()));
+                        break;
                     default:
                         return;
                 }
