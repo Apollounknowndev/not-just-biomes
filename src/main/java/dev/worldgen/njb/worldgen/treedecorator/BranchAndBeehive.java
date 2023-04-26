@@ -11,7 +11,7 @@ import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -70,7 +70,7 @@ public class BranchAndBeehive extends TreeDecorator {
                         int i = 2 + random.nextInt(2);
                         for (int j = 0; j < i; ++j) {
                             NbtCompound nbtCompound = new NbtCompound();
-                            nbtCompound.putString("id", Registries.ENTITY_TYPE.getId(EntityType.BEE).toString());
+                            nbtCompound.putString("id", Registry.ENTITY_TYPE.getId(EntityType.BEE).toString());
                             blockEntity.addBee(nbtCompound, random.nextInt(599), false);
                         }
                     });

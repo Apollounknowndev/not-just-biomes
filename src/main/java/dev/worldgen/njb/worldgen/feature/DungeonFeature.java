@@ -8,7 +8,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.loot.LootTables;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -76,7 +76,7 @@ public class DungeonFeature extends Feature<DungeonConfig> {
                     }
                     if (Math.abs(x) == length || y == -1 || Math.abs(z) == width) {
                         if (blockPos2.getY() >= world.getBottomY() && !world.getBlockState(blockPos2.down()).getMaterial().isSolid()) {
-                            world.setBlockState(blockPos2, config.airState.get(random, blockPos2), Block.NOTIFY_LISTENERS);
+                            world.setBlockState(blockPos2, config.airState.getBlockState(random, blockPos2), Block.NOTIFY_LISTENERS);
                             continue;
                         }
                         if (!blockState.getMaterial().isSolid() || blockState.isOf(Blocks.CHEST)) continue;
@@ -86,14 +86,14 @@ public class DungeonFeature extends Feature<DungeonConfig> {
                             continue;
                         }
                         if (y == -1) {
-                            this.setBlockStateIf(world, blockPos2, config.floorState.get(random, blockPos2), predicate);
+                            this.setBlockStateIf(world, blockPos2, config.floorState.getBlockState(random, blockPos2), predicate);
                             continue;
                         }
-                        this.setBlockStateIf(world, blockPos2, config.wallState.get(random, blockPos2), predicate);
+                        this.setBlockStateIf(world, blockPos2, config.wallState.getBlockState(random, blockPos2), predicate);
                         continue;
                     }
                     if (blockState.isOf(Blocks.CHEST) || blockState.isOf(Blocks.SPAWNER)) continue;
-                    this.setBlockStateIf(world, blockPos2, config.airState.get(random, blockPos2), predicate);
+                    this.setBlockStateIf(world, blockPos2, config.airState.getBlockState(random, blockPos2), predicate);
                 }
             }
         }
@@ -118,7 +118,7 @@ public class DungeonFeature extends Feature<DungeonConfig> {
         this.setBlockStateIf(world, blockPos, Blocks.SPAWNER.getDefaultState(), predicate);
         BlockEntity blockEntity = world.getBlockEntity(blockPos);
         if (blockEntity instanceof MobSpawnerBlockEntity mobSpawnerBlockEntity) {
-            mobSpawnerBlockEntity.setEntityType(config.spawnerMobs.getRandom(random).get().value(), random);
+            mobSpawnerBlockEntity.getLogic().setEntityId(config.spawnerMobs.getRandom(random).get().value());
         } else {
             NotJustBiomes.LOGGER.error("Failed to fetch mob spawner entity at ({}, {}, {})", blockPos.getX(), blockPos.getY(), blockPos.getZ());
         }

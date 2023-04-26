@@ -1,7 +1,6 @@
 package dev.worldgen.njb;
 
 import dev.worldgen.njb.config.ConfigHandler;
-import apollo.njb.registry.*;
 import dev.worldgen.njb.worldgen.NJBBiomeModifications;
 import dev.worldgen.njb.registry.*;
 import net.fabricmc.api.ModInitializer;

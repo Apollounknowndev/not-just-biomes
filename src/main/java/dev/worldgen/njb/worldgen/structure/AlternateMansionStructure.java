@@ -86,7 +86,7 @@ public class AlternateMansionStructure extends Structure {
                             break;
                         }
 
-                        world.setBlockState(mutable, moduleEnabled ? foundationProvider.get(random, new BlockPos(k, m, l)) : Blocks.COBBLESTONE.getDefaultState(), 2);
+                        world.setBlockState(mutable, moduleEnabled ? foundationProvider.getBlockState(random, new BlockPos(k, m, l)) : Blocks.COBBLESTONE.getDefaultState(), 2);
                     }
                 }
             }

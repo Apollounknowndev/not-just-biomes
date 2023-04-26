@@ -3,11 +3,11 @@ package dev.worldgen.njb.worldgen.feature.config;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.EntityType;
-import net.minecraft.registry.RegistryCodecs;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.util.math.intprovider.IntProvider;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryCodecs;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryEntryList;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
@@ -54,7 +54,7 @@ public class DungeonConfig implements FeatureConfig {
             IntProvider.createValidatingCodec(0, 16).fieldOf("ceiling_feature_placements").forGetter((dungeon) -> {
                 return dungeon.ceilingFeaturePlacements;
             }),
-            RegistryCodecs.entryList(RegistryKeys.ENTITY_TYPE).fieldOf("spawner_mobs").forGetter((dungeon) -> {
+            RegistryCodecs.entryList(Registry.ENTITY_TYPE_KEY).fieldOf("spawner_mobs").forGetter((dungeon) -> {
                 return dungeon.spawnerMobs;
             })
         ).apply(instance, DungeonConfig::new);
