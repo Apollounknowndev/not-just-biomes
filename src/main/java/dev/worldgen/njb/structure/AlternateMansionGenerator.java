@@ -931,14 +931,14 @@ public class AlternateMansionGenerator {
         }
 
         private static StructurePlacementData createPlacementData(MansionTemplates mansionTemplates,  BlockMirror mirror, BlockRotation rotation) {
-            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(true).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(false).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
             List<StructureProcessor> processors = mansionTemplates.mansionProcessor.value().getList();
             processors.forEach(structurePlacementData::addProcessor);
             return structurePlacementData;
         }
 
         private static StructurePlacementData createPlacementData(DynamicRegistryManager dynamicRegistryManager, BlockMirror mirror, BlockRotation rotation) {
-            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(true).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(false).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
             RegistryKey<StructureProcessorList> processorList = RegistryKey.of(RegistryKeys.PROCESSOR_LIST, new Identifier(NotJustBiomes.MOD_ID, "mansion/generic"));
             List<StructureProcessor> processors = dynamicRegistryManager.get(RegistryKeys.PROCESSOR_LIST).get(processorList).getList();
             processors.forEach(structurePlacementData::addProcessor);
