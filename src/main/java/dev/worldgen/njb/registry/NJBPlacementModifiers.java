@@ -1,6 +1,5 @@
 package dev.worldgen.njb.registry;
 
-import apollo.njb.worldgen.placementmodifier.*;
 import dev.worldgen.njb.worldgen.placementmodifier.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
