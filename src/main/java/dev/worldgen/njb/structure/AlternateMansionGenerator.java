@@ -931,14 +931,14 @@ public class AlternateMansionGenerator {
         }
 
         private static StructurePlacementData createPlacementData(MansionTemplates mansionTemplates,  BlockMirror mirror, BlockRotation rotation) {
-            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(true).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(false).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
             List<StructureProcessor> processors = mansionTemplates.mansionProcessor.value().getList();
             processors.forEach(structurePlacementData::addProcessor);
             return structurePlacementData;
         }
 
         private static StructurePlacementData createPlacementData(DynamicRegistryManager dynamicRegistryManager, BlockMirror mirror, BlockRotation rotation) {
-            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(true).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+            StructurePlacementData structurePlacementData = new StructurePlacementData().setIgnoreEntities(false).setRotation(rotation).setMirror(mirror).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
             RegistryKey<StructureProcessorList> processorList = RegistryKey.of(RegistryKeys.PROCESSOR_LIST, new Identifier(NotJustBiomes.MOD_ID, "mansion/generic"));
             List<StructureProcessor> processors = dynamicRegistryManager.get(RegistryKeys.PROCESSOR_LIST).get(processorList).getList();
             processors.forEach(structurePlacementData::addProcessor);
@@ -976,17 +976,21 @@ public class AlternateMansionGenerator {
                     case "Warrior":
                         list.add(EntityType.VINDICATOR.create(world.toServerWorld()));
                         break;
-                    case "Group of Allays":
-                        int i = world.getRandom().nextInt(3) + 1;
-                        int j = 0;
+                    case "Prisoner":
+                        if (random.nextBoolean()) {
+                            int i = world.getRandom().nextInt(3) + 1;
+                            int j = 0;
 
-                        while(true) {
-                            if (j >= i) {
-                                break label60;
+                            while(true) {
+                                if (j >= i) {
+                                    break label60;
+                                }
+
+                                list.add(EntityType.ALLAY.create(world.toServerWorld()));
+                                ++j;
                             }
-
-                            list.add(EntityType.ALLAY.create(world.toServerWorld()));
-                            ++j;
+                        } else {
+                            list.add(EntityType.VILLAGER.create(world.toServerWorld()));
                         }
                     default:
                         return;

@@ -17,11 +17,9 @@ import java.util.List;
 
 public class NJBBiomeModifications {
     private static final TagKey<Biome> OAK_FOREST = TagKey.of(RegistryKeys.BIOME, new Identifier(NotJustBiomes.MOD_ID, "oak_forest"));
-    private static final TagKey<Biome> CHERRY = TagKey.of(RegistryKeys.BIOME, new Identifier(NotJustBiomes.MOD_ID, "cherry"));
     private static final List<String> birchFeatures = Arrays.asList("fallen_log","block_patch", "rock");
     private static final List<String> forestFeatures = Arrays.asList("fallen_log","block_patch", "rock");
     private static final List<String> taigaFeatures = Arrays.asList("fallen_log","block_patch", "rock");
-    private static final List<String> cherryFeatures = Arrays.asList("azalea_bush","bamboo_cherry", "flowers_cherry", "rock_cherry", "block_patch");
     private static final List<String> swampFeatures = Arrays.asList("mud_pools", "blue_orchids", "disk_mud");
     private static final RegistryKey<PlacedFeature> DESERT_DUNGEON = getRegistryKeyWithPath("dungeon/desert");
     public static final RegistryKey<PlacedFeature> JUNGLE_DUNGEON = getRegistryKeyWithPath("dungeon/jungle");
@@ -50,7 +48,6 @@ public class NJBBiomeModifications {
         BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN), GenerationStep.Feature.UNDERGROUND_STRUCTURES, MOUNTAIN_DUNGEON);
 
         placeModuleFeatures(birchFeatures, ConventionalBiomeTags.BIRCH_FOREST, "birch_forest/");
-        placeModuleFeatures(cherryFeatures, CHERRY, "cherry_grove/");
         placeModuleFeatures(forestFeatures, OAK_FOREST, "forest/");
         placeModuleFeatures(taigaFeatures, ConventionalBiomeTags.TAIGA, "taiga/");
         placeModuleFeatures(swampFeatures, ConventionalBiomeTags.SWAMP, "swamp/");
