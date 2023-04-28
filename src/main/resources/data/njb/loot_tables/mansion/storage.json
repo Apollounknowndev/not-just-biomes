@@ -24,13 +24,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "njb:mansion/generic",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{HideFlags:2}"
-            }
-          ]
+          "name": "njb:mansion/generic"
         }
       ]
     }
