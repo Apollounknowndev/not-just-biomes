@@ -30,7 +30,7 @@ public class ConfigHandler {
         }
     };
 
-    static Map<String, Boolean> CONFIG_VALUES;
+    static Map<String, Boolean> CONFIG_VALUES = new HashMap<>();
     public static void loadOrCreateDefaultConfig() {
         if (!Files.isRegularFile(FILE_PATH)) {
             NotJustBiomes.LOGGER.info("Config file for Not Just Biomes not found, creating file with default values...");
@@ -42,13 +42,14 @@ public class ConfigHandler {
         }
         try (BufferedReader reader = Files.newBufferedReader(FILE_PATH)) {
             JsonElement json = JsonParser.parseReader(reader);
-            JsonObject jsonObject = json.getAsJsonObject();
-            CONFIG_VALUES = new HashMap<>();
-            for (Map.Entry<String, JsonElement> configValues : jsonObject.entrySet()) {
-                if (DEFAULT_CONFIG_VALUES.containsKey(configValues.getKey())) {
-                    String key = configValues.getKey();
-                    Boolean value = configValues.getValue().getAsBoolean();
-                    CONFIG_VALUES.put(key, value);
+            JsonObject jsonObject = json.getAsJsonObject().getAsJsonObject("enabled_modules");
+            if (jsonObject != null) {
+                for (Map.Entry<String, JsonElement> configValues : jsonObject.entrySet()) {
+                    if (DEFAULT_CONFIG_VALUES.containsKey(configValues.getKey())) {
+                        String key = configValues.getKey();
+                        Boolean value = configValues.getValue().getAsBoolean();
+                        CONFIG_VALUES.put(key, value);
+                    }
                 }
             }
             for (Map.Entry<String, Boolean> defaultConfigValues : DEFAULT_CONFIG_VALUES.entrySet()) {
