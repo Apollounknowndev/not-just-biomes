@@ -1,12 +1,13 @@
 package dev.worldgen.njb.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import dev.worldgen.njb.NotJustBiomes;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.SimpleOption;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.Map;
@@ -25,9 +26,22 @@ public class ConfigScreen extends Screen implements ConfigScreenFactory<Screen> 
         for (Map.Entry<String, Boolean> defaultConfigValues : ConfigHandler.DEFAULT_CONFIG_VALUES.entrySet()) {
             String key = defaultConfigValues.getKey();
             list.addSingleOptionEntry(
-                SimpleOption.ofBoolean("config.njb.button."+key,
-                ConfigHandler.getConfigValue(key),
-                (value) -> ConfigHandler.flipValue(key)));
+                SimpleOption.ofBoolean(
+                "config.njb.button."+key,
+                    ConfigHandler.getConfigValue(key),
+                    (value) -> ConfigHandler.flipValue(key)
+                )
+            );
+        }
+        if (NotJustBiomes.isTectonicLoaded) {
+            list.addSingleOptionEntry(
+                SimpleOption.ofBoolean(
+                    "config.njb.button.tectonic_trees",
+                    SimpleOption.constantTooltip(Text.translatable("config.njb.button.tectonic_trees.tooltip")),
+                    ConfigHandler.getConfigValue("tectonic_trees"),
+                    (value) -> ConfigHandler.flipValue("tectonic_trees")
+                )
+            );
         }
         addSelectableChild(list);
 
@@ -41,11 +55,11 @@ public class ConfigScreen extends Screen implements ConfigScreenFactory<Screen> 
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        this.renderBackground(matrices);
-        list.render(matrices, mouseX, mouseY, delta);
-        drawCenteredTextWithShadow(matrices, textRenderer, title, width / 2, 5, 0xffffff);
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
+        this.renderBackground(drawContext);
+        list.render(drawContext, mouseX, mouseY, delta);
+        drawContext.drawCenteredTextWithShadow(textRenderer, title, width / 2, 5, 0xffffff);
+        super.render(drawContext, mouseX, mouseY, delta);
     }
 
     @Override

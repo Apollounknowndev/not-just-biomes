@@ -6,7 +6,9 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.ChunkRandom;
@@ -30,6 +32,8 @@ public class NoiseBasedStraight extends TrunkPlacer {
                 return trunkPlacer.randomHeight;
             }), SeededNoiseProvider.CODEC.fieldOf("noise_provider").forGetter((trunkPlacer) -> {
                 return trunkPlacer.noiseProvider;
+            }), TrunkType.CODEC.fieldOf("trunk_type").orElse(TrunkType.DEFAULT).forGetter((trunkPlacer) -> {
+                return trunkPlacer.trunkType;
             })).apply(instance, NoiseBasedStraight::new);
     });
 
@@ -38,12 +42,14 @@ public class NoiseBasedStraight extends TrunkPlacer {
     private final int minimumHeight;
     private final int maximumHeight;
     private final int randomHeight;
+    private final TrunkType trunkType;
 
-    public NoiseBasedStraight(int minimumHeight, int maximumHeight, int randomHeight, SeededNoiseProvider noiseProvider) {
+    public NoiseBasedStraight(int minimumHeight, int maximumHeight, int randomHeight, SeededNoiseProvider noiseProvider, TrunkType trunkType) {
         super(minimumHeight, maximumHeight, randomHeight);
         this.minimumHeight = minimumHeight;
         this.maximumHeight = maximumHeight;
         this.randomHeight = randomHeight;
+        this.trunkType = trunkType;
         this.noiseProvider = noiseProvider;
         this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new CheckedRandom(noiseProvider.seed)), noiseProvider.noiseParameters);
 
@@ -57,12 +63,76 @@ public class NoiseBasedStraight extends TrunkPlacer {
         setToDirt(world, replacer, random, startPos.down(), config);
 
         double i = this.noiseSampler.sample((double)startPos.getX() * noiseProvider.xz_scale, (double)startPos.getY() * noiseProvider.y_scale, (double)startPos.getZ() * noiseProvider.xz_scale);
-        int j = Math.toIntExact(Math.min(Math.max(Math.round(((float)(this.maximumHeight-this.minimumHeight)/2)*i+((float)(this.minimumHeight+this.maximumHeight)/2)),this.minimumHeight),this.maximumHeight))+ random.nextInt(this.randomHeight+1);
+        int trunkHeight = Math.toIntExact(Math.min(Math.max(Math.round(((float)(this.maximumHeight-this.minimumHeight)/2)*i+((float)(this.minimumHeight+this.maximumHeight)/2)),this.minimumHeight),this.maximumHeight))+ random.nextInt(this.randomHeight+1);
 
-        for(int k = 0; k < j; ++k) {
-            this.getAndSetState(world, replacer, random, startPos.up(k), config);
+        if (this.trunkType == TrunkType.DEFAULT) {
+            for (int k = 0; k < trunkHeight; ++k) {
+                this.getAndSetState(world, replacer, random, startPos.up(k), config);
+            }
+            return ImmutableList.of(new FoliagePlacer.TreeNode(startPos.up(trunkHeight), 0, false));
+        } else {
+            // TODO: What is this abomination of code???
+            int halfHeight = (int)Math.ceil((double)trunkHeight/2);
+            for (int k = 0; k < halfHeight+1; ++k) {
+                this.getAndSetState(world, replacer, random, startPos.up(k), config);
+            }
+            boolean r = random.nextBoolean();
+            boolean hasDoubleBranches = random.nextBoolean();
+            int offset = random.nextBoolean() ? 1 : -1;
+            int offset2 = random.nextBoolean() ? 1 : -1;
+            Axis axis = random.nextBoolean() ? Axis.X : Axis.Z;
+            Axis oppositeAxis = axis == Axis.X ? Axis.Z : Axis.X;
+            if (r) {
+                for (int k = halfHeight; k < trunkHeight; ++k) {
+                    this.getAndSetState(world, replacer, random, startPos.up(k).offset(axis, offset),
+                            config);
+                }
+                if (hasDoubleBranches) {
+                    for (int k = halfHeight; k < trunkHeight; ++k) {
+                        this.getAndSetState(world, replacer, random, startPos.up(k).offset(axis,
+                                offset * -1), config);
+                    }
+                    return ImmutableList.of(
+                            new FoliagePlacer.TreeNode(startPos.up(trunkHeight-1).offset(axis, offset), 0,
+                                    false),
+                            new FoliagePlacer.TreeNode(startPos.up(trunkHeight-1).offset(axis, offset * -1), 0, false)
+                    );
+                } else {
+                    return ImmutableList.of(new FoliagePlacer.TreeNode(startPos.up(trunkHeight-1).offset(axis, offset), 0, false));
+                }
+            } else {
+                for (int k = halfHeight; k < trunkHeight; ++k) {
+                    this.getAndSetState(world, replacer, random, startPos.up(k).offset(axis, offset).offset(oppositeAxis, offset2), config);
+                }
+                if (hasDoubleBranches) {
+                    for (int k = halfHeight; k < trunkHeight; ++k) {
+                        this.getAndSetState(world, replacer, random, startPos.up(k).offset(axis, offset * -1).offset(oppositeAxis, offset2 * -1), config);
+                    }
+                    return ImmutableList.of(
+                            new FoliagePlacer.TreeNode(startPos.up(trunkHeight-1).offset(axis, offset).offset(oppositeAxis, offset2), 0, false),
+                            new FoliagePlacer.TreeNode(startPos.up(trunkHeight-1).offset(axis, offset * -1).offset(oppositeAxis, offset2 * -1), 0, false)
+                    );
+                } else {
+                    return ImmutableList.of(new FoliagePlacer.TreeNode(startPos.up(trunkHeight-1).offset(axis, offset).offset(oppositeAxis, offset2), 0, false));
+                }
+            }
+        }
+    }
+
+    public static enum TrunkType implements StringIdentifiable {
+        TECTONIC_OAK("tectonic_oak"),
+        DEFAULT("default");
+
+        public static final Codec<TrunkType> CODEC = StringIdentifiable.createCodec(TrunkType::values);
+        private final String name;
+
+        private TrunkType(String name) {
+            this.name = name;
         }
 
-        return ImmutableList.of(new FoliagePlacer.TreeNode(startPos.up(j), 0, false));
+        @Override
+        public String asString() {
+            return this.name;
+        }
     }
 }

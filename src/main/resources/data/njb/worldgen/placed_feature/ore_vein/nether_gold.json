@@ -1,0 +1,32 @@
+{
+  "feature": "njb:ore_vein/nether_gold",
+  "placement": [
+    {
+      "type": "njb:config",
+      "module": "ore_vein",
+      "inverted": false
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 16
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "above_bottom": 16
+        },
+        "max_inclusive": {
+          "below_top": 16
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

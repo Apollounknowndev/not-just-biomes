@@ -1,0 +1,51 @@
+{
+  "type": "njb:well",
+  "config": {
+    "standard_state": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "weight": 4,
+          "data": {
+            "Name": "minecraft:stone_bricks"
+          }
+        },
+        {
+          "weight": 2,
+          "data": {
+            "Name": "minecraft:cracked_stone_bricks"
+          }
+        },
+        {
+          "weight": 1,
+          "data": {
+            "Name": "minecraft:chiseled_stone_bricks"
+          }
+        }
+      ]
+    },
+    "slab_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:stone_brick_slab"
+      }
+    },
+    "fluid_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:ice"
+      }
+    },
+    "ground_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:gravel"
+      }
+    },
+    "suspicious_state": {
+      "Name": "minecraft:suspicious_gravel"
+    },
+    "place_suspicious_block": true,
+    "suspicious_loot_table": "njb:well/frozen"
+  }
+}

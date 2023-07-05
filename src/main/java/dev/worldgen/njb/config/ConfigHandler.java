@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ConfigHandler {
     private static final Path FILE_PATH = FabricLoader.getInstance().getConfigDir().resolve("not-just-biomes.json");
@@ -25,12 +26,14 @@ public class ConfigHandler {
             put("dungeon", true);
             put("forest", true);
             put("mansion", true);
+            put("ore_vein", true);
             put("swamp", true);
             put("taiga", true);
+            put("well", true);
         }
     };
 
-    static Map<String, Boolean> CONFIG_VALUES;
+    static Map<String, Boolean> CONFIG_VALUES = new HashMap<>();
     public static void loadOrCreateDefaultConfig() {
         if (!Files.isRegularFile(FILE_PATH)) {
             NotJustBiomes.LOGGER.info("Config file for Not Just Biomes not found, creating file with default values...");
@@ -42,17 +45,21 @@ public class ConfigHandler {
         }
         try (BufferedReader reader = Files.newBufferedReader(FILE_PATH)) {
             JsonElement json = JsonParser.parseReader(reader);
-            JsonObject jsonObject = json.getAsJsonObject();
-            CONFIG_VALUES = new HashMap<>();
-            for (Map.Entry<String, JsonElement> configValues : jsonObject.entrySet()) {
-                if (DEFAULT_CONFIG_VALUES.containsKey(configValues.getKey())) {
-                    String key = configValues.getKey();
-                    Boolean value = configValues.getValue().getAsBoolean();
-                    CONFIG_VALUES.put(key, value);
+            JsonObject jsonObject = json.getAsJsonObject().getAsJsonObject("enabled_modules");
+            if (jsonObject != null) {
+                for (Map.Entry<String, JsonElement> configValues : jsonObject.entrySet()) {
+                    if (DEFAULT_CONFIG_VALUES.containsKey(configValues.getKey()) || Objects.equals(configValues.getKey(), "tectonic_trees")) {
+                        String key = configValues.getKey();
+                        Boolean value = configValues.getValue().getAsBoolean();
+                        CONFIG_VALUES.put(key, value);
+                    }
                 }
             }
             for (Map.Entry<String, Boolean> defaultConfigValues : DEFAULT_CONFIG_VALUES.entrySet()) {
                 CONFIG_VALUES.putIfAbsent(defaultConfigValues.getKey(), defaultConfigValues.getValue());
+            }
+            if (NotJustBiomes.isTectonicLoaded) {
+                CONFIG_VALUES.putIfAbsent("tectonic_trees", false);
             }
             writeToFile(CONFIG_VALUES);
         } catch (Exception e) {

@@ -24,5 +24,9 @@ public class NJBPlacementModifiers {
     public static final PlacementModifierType<NoiseThresholdPlacementModifier> NOISE_THRESHOLD = register(
         registry, "noise_threshold", () -> NoiseThresholdPlacementModifier.MODIFIER_CODEC
     );
+
+    public static final PlacementModifierType<SteepCornersPlacementModifier> STEEP_CORNERS = register(
+        registry, "steep_corners", () -> SteepCornersPlacementModifier.MODIFIER_CODEC
+    );
     public static void init() {}
 }

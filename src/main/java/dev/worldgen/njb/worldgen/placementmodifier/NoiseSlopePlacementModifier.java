@@ -12,6 +12,7 @@ import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.ChunkRandom;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.gen.noise.NoiseConfig;
 import net.minecraft.world.gen.placementmodifier.AbstractCountPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.PlacementModifierType;
 public class NoiseSlopePlacementModifier extends AbstractCountPlacementModifier {

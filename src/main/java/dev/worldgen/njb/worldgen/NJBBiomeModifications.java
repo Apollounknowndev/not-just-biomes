@@ -27,6 +27,11 @@ public class NJBBiomeModifications {
     public static final RegistryKey<PlacedFeature> JUNGLE_DUNGEON = getRegistryKeyWithPath("dungeon/jungle");
     public static final RegistryKey<PlacedFeature> BADLANDS_DUNGEON = getRegistryKeyWithPath("dungeon/badlands");
     public static final RegistryKey<PlacedFeature> MOUNTAIN_DUNGEON = getRegistryKeyWithPath("dungeon/mountain");
+    public static final RegistryKey<PlacedFeature> FROZEN_WELL = getRegistryKeyWithModuleAndPath("well/", "frozen");
+    public static final RegistryKey<PlacedFeature> BADLANDS_WELL = getRegistryKeyWithModuleAndPath("well/", "badlands");
+    public static final RegistryKey<PlacedFeature> EMERALD_ORE_VEIN = getRegistryKeyWithModuleAndPath("ore_vein/", "emerald");
+    public static final RegistryKey<PlacedFeature> GOLD_ORE_VEIN = getRegistryKeyWithModuleAndPath("ore_vein/", "gold");
+    public static final RegistryKey<PlacedFeature> NETHER_GOLD_ORE_VEIN = getRegistryKeyWithModuleAndPath("ore_vein/", "nether_gold");
     public static RegistryKey<PlacedFeature> getRegistryKeyWithPath(String path) {
         return RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(NotJustBiomes.MOD_ID, path));
     }
@@ -48,6 +53,11 @@ public class NJBBiomeModifications {
         BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.JUNGLE), GenerationStep.Feature.UNDERGROUND_STRUCTURES, JUNGLE_DUNGEON);
         BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS), GenerationStep.Feature.UNDERGROUND_STRUCTURES, BADLANDS_DUNGEON);
         BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN), GenerationStep.Feature.UNDERGROUND_STRUCTURES, MOUNTAIN_DUNGEON);
+        BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.SNOWY), GenerationStep.Feature.SURFACE_STRUCTURES, FROZEN_WELL);
+        BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS), GenerationStep.Feature.SURFACE_STRUCTURES, BADLANDS_WELL);
+        BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.MOUNTAIN), GenerationStep.Feature.UNDERGROUND_ORES, EMERALD_ORE_VEIN);
+        BiomeModifications.addFeature(BiomeSelectors.tag(ConventionalBiomeTags.BADLANDS), GenerationStep.Feature.UNDERGROUND_ORES, GOLD_ORE_VEIN);
+        BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NETHER_GOLD_ORE_VEIN);
 
         placeModuleFeatures(birchFeatures, ConventionalBiomeTags.BIRCH_FOREST, "birch_forest/");
         placeModuleFeatures(cherryFeatures, CHERRY, "cherry_grove/");

@@ -1,0 +1,51 @@
+{
+  "type": "njb:ore_vein",
+  "config": {
+    "noise_provider": {
+      "seed": 230572385,
+      "noise": {
+        "firstOctave": -7,
+        "amplitudes": [
+          1.1
+        ]
+      },
+      "xz_scale": 6,
+      "y_scale": 6
+    },
+    "state_provider": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "weight": 1,
+          "data": {
+            "Name": "minecraft:infested_stone"
+          }
+        },
+        {
+          "weight": 4,
+          "data": {
+            "Name": "minecraft:stone"
+          }
+        },
+        {
+          "weight": 3,
+          "data": {
+            "Name": "minecraft:emerald_ore"
+          }
+        }
+      ]
+    },
+    "max_radius": 15,
+    "replaceable": "#minecraft:base_stone_overworld",
+    "points": [
+      {
+        "percent_distance_from_max_radius": 0,
+        "noise_additive": -0.3
+      },
+      {
+        "percent_distance_from_max_radius": 1,
+        "noise_additive": 0.1
+      }
+    ]
+  }
+}

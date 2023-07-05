@@ -1,0 +1,34 @@
+{
+  "type": "njb:well",
+  "config": {
+    "standard_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:red_sandstone"
+      }
+    },
+    "slab_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:red_sandstone_slab"
+      }
+    },
+    "fluid_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:water"
+      }
+    },
+    "ground_state": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:gravel"
+      }
+    },
+    "suspicious_state": {
+      "Name": "minecraft:suspicious_gravel"
+    },
+    "place_suspicious_block": true,
+    "suspicious_loot_table": "njb:well/badlands"
+  }
+}

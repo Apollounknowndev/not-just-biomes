@@ -44,8 +44,7 @@ public class DungeonFeature extends Feature<DungeonConfig> {
             for (y = -1; y <= height; y++) {
                 for (z = -width; z <= width; z++) {
                     blockPos2 = blockPos.add(x, y, z);
-                    Material material = world.getBlockState(blockPos2).getMaterial();
-                    boolean bl = material.isSolid();
+                    boolean bl = world.getBlockState(blockPos2).isSolid();
                     if (y == -1 && !bl) {
                         return false;
                     }if (y == height && !bl) {
@@ -69,17 +68,17 @@ public class DungeonFeature extends Feature<DungeonConfig> {
                         boolean bl2 = ((Math.abs(x) == length-1 || Math.abs(z) == width-1) && !(Math.abs(x) == length || Math.abs(z) == width) && y == height && !bl);
                         if (bl || bl2) {
                             Direction.Axis axis = bl ? Direction.Axis.Y : (Math.abs(x) == length - 1 ? Direction.Axis.Z : Direction.Axis.X);
-                            if (!blockState.getMaterial().isSolid() || blockState.isOf(Blocks.CHEST)) continue;
+                            if (!blockState.isSolid() || blockState.isOf(Blocks.CHEST)) continue;
                             this.setBlockStateIf(world, blockPos2, Blocks.SPRUCE_LOG.getDefaultState().with(PillarBlock.AXIS, axis), predicate);
                             continue;
                         }
                     }
                     if (Math.abs(x) == length || y == -1 || Math.abs(z) == width) {
-                        if (blockPos2.getY() >= world.getBottomY() && !world.getBlockState(blockPos2.down()).getMaterial().isSolid()) {
+                        if (blockPos2.getY() >= world.getBottomY() && !world.getBlockState(blockPos2.down()).isSolid()) {
                             world.setBlockState(blockPos2, config.airState.get(random, blockPos2), Block.NOTIFY_LISTENERS);
                             continue;
                         }
-                        if (!blockState.getMaterial().isSolid() || blockState.isOf(Blocks.CHEST)) continue;
+                        if (!blockState.isSolid() || blockState.isOf(Blocks.CHEST)) continue;
                         if (config.bandlandsOverride) {
                             if (blockState.isIn(BlockTags.TERRACOTTA)) continue;
                             this.setBlockStateIf(world, blockPos2, Blocks.TERRACOTTA.getDefaultState(), predicate);
@@ -106,7 +105,7 @@ public class DungeonFeature extends Feature<DungeonConfig> {
                 if (!world.isAir(blockPos3)) continue;
                 int aa = 0;
                 for (Direction direction : Direction.Type.HORIZONTAL) {
-                    if (!world.getBlockState(blockPos3.offset(direction)).getMaterial().isSolid()) continue;
+                    if (!world.getBlockState(blockPos3.offset(direction)).isSolid()) continue;
                     ++aa;
                 }
                 if (aa != 1) continue;

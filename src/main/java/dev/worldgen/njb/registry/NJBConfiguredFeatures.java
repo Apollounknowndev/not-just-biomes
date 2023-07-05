@@ -1,13 +1,7 @@
 package dev.worldgen.njb.registry;
 
-import dev.worldgen.njb.worldgen.feature.ConfigBasedSelectorFeature;
-import dev.worldgen.njb.worldgen.feature.DungeonFeature;
-import dev.worldgen.njb.worldgen.feature.FallenLogFeature;
-import dev.worldgen.njb.worldgen.feature.RockFeature;
-import dev.worldgen.njb.worldgen.feature.config.ConfigBasedSelectorConfig;
-import dev.worldgen.njb.worldgen.feature.config.DungeonConfig;
-import dev.worldgen.njb.worldgen.feature.config.FallenLogConfig;
-import dev.worldgen.njb.worldgen.feature.config.RockConfig;
+import dev.worldgen.njb.worldgen.feature.*;
+import dev.worldgen.njb.worldgen.feature.config.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.world.gen.feature.Feature;
@@ -27,6 +21,12 @@ public class NJBConfiguredFeatures {
     );
     public static final Feature<FallenLogConfig> FALLEN_LOG = register(
         registry, "fallen_log", new FallenLogFeature(FallenLogConfig.CODEC)
+    );
+    public static final Feature<WellConfig> WELL = register(
+        registry, "well", new WellFeature(WellConfig.CODEC)
+    );
+    public static final Feature<OreVeinConfig> ORE_VEIN = register(
+        registry, "ore_vein", new OreVeinFeature(OreVeinConfig.CODEC)
     );
     public static void init() {}
 }

@@ -1,0 +1,34 @@
+{
+  "feature": "njb:well/badlands",
+  "placement": [
+    {
+      "type": "njb:config",
+      "module": "well",
+      "inverted": false
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 200
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING"
+    },
+    {
+      "type": "njb:steep_corners",
+      "radius": 2,
+      "heightmap": "MOTION_BLOCKING",
+      "threshold": 2
+    },
+    {
+      "type": "minecraft:surface_water_depth_filter",
+      "max_water_depth": 0
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
