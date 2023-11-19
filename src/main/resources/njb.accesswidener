@@ -1,4 +1,12 @@
 accessWidener v1 named
 
-accessible method net/minecraft/world/gen/trunk/TrunkPlacerType <init> (Lcom/mojang/serialization/Codec;)V
-accessible method net/minecraft/world/gen/treedecorator/TreeDecoratorType <init> (Lcom/mojang/serialization/Codec;)V
+accessible class net/minecraft/world/gen/surfacebuilder/MaterialRules$BlockStateRule
+accessible class net/minecraft/world/gen/surfacebuilder/MaterialRules$MaterialRuleContext
+accessible field net/minecraft/world/gen/surfacebuilder/MaterialRules$MaterialRuleContext noiseConfig Lnet/minecraft/world/gen/noise/NoiseConfig;
+accessible field net/minecraft/world/gen/surfacebuilder/MaterialRules$MaterialRuleContext blockX I
+accessible field net/minecraft/world/gen/surfacebuilder/MaterialRules$MaterialRuleContext blockY I
+accessible field net/minecraft/world/gen/surfacebuilder/MaterialRules$MaterialRuleContext blockZ I
+accessible field net/minecraft/world/gen/surfacebuilder/MaterialRules$MaterialRuleContext surfaceBuilder Lnet/minecraft/world/gen/surfacebuilder/SurfaceBuilder;
+accessible class net/minecraft/world/gen/surfacebuilder/MaterialRules$BooleanSupplier
+accessible class net/minecraft/world/gen/surfacebuilder/MaterialRules$FullLazyAbstractPredicate
+accessible field net/minecraft/world/gen/surfacebuilder/MaterialRules$MaterialRuleContext biomeSupplier Ljava/util/function/Supplier;

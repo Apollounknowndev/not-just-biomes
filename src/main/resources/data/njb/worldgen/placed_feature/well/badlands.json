@@ -2,11 +2,6 @@
   "feature": "njb:well/badlands",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "well",
-      "inverted": false
-    },
-    {
       "type": "minecraft:rarity_filter",
       "chance": 200
     },

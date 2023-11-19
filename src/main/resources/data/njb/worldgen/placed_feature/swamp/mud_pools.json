@@ -2,11 +2,6 @@
   "feature": "njb:swamp/mud_pool",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "swamp",
-      "inverted": false
-    },
-    {
       "type": "minecraft:count",
       "count": {
         "type": "minecraft:uniform",

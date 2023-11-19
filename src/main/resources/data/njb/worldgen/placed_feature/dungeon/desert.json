@@ -2,11 +2,6 @@
   "feature": "njb:dungeon/dungeon_desert",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "dungeon",
-      "inverted": false
-    },
-    {
       "type": "minecraft:count",
       "count": 2
     },

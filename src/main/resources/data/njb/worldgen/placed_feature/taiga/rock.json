@@ -2,11 +2,6 @@
   "feature": "njb:taiga/rock",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "taiga",
-      "inverted": false
-    },
-    {
       "type": "njb:noise_slope",
       "noise_provider": {
         "seed": 23586234,

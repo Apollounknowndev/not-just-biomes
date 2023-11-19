@@ -2,11 +2,6 @@
   "feature": "njb:shared/rock",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "birch_forest",
-      "inverted": false
-    },
-    {
       "type": "njb:noise_slope",
       "noise_provider": {
         "seed": 23586234,

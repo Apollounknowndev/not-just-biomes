@@ -1,0 +1,78 @@
+{
+  "type": "lithostitched:add_surface_rule",
+  "predicate": {
+    "type": "njb:module_enabled",
+    "module": "ore_vein"
+  },
+  "levels": [
+    "minecraft:overworld"
+  ],
+  "surface_rule": {
+    "type": "minecraft:condition",
+    "if_true": {
+      "type": "njb:biome",
+      "biomes": "#c:badlands"
+    },
+    "then_run": {
+      "type": "minecraft:condition",
+      "if_true": {
+        "type": "minecraft:not",
+        "invert": {
+          "type": "minecraft:above_preliminary_surface"
+        }
+      },
+      "then_run": {
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "njb:ore_vein",
+          "toggle": "minecraft:ore_veininess",
+          "ridged_a": "minecraft:ore_vein_a",
+          "ridged_b": "minecraft:ore_vein_b",
+          "threshold": 0.3,
+          "min_y": 32,
+          "max_y": 128,
+          "use_positive_toggle": false
+        },
+        "then_run": {
+          "type": "minecraft:sequence",
+          "sequence": [
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "njb:random",
+                "seed": "njb:raw_ore_block",
+                "chance": 0.02
+              },
+              "then_run": {
+                "type": "minecraft:block",
+                "result_state": {
+                  "Name": "minecraft:raw_gold_block"
+                }
+              }
+            },
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "njb:random",
+                "seed": "njb:ore",
+                "chance": 0.4
+              },
+              "then_run": {
+                "type": "minecraft:block",
+                "result_state": {
+                  "Name": "minecraft:gold_ore"
+                }
+              }
+            },
+            {
+              "type": "minecraft:block",
+              "result_state": {
+                "Name": "minecraft:andesite"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

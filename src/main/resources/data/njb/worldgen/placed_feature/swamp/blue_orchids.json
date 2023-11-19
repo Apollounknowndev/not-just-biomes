@@ -2,11 +2,6 @@
   "feature": "minecraft:flower_swamp",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "swamp",
-      "inverted": false
-    },
-    {
       "type": "minecraft:rarity_filter",
       "chance": 4
     },

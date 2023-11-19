@@ -2,11 +2,6 @@
   "feature": "njb:cherry_grove/azalea_bush",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "cherry_grove",
-      "inverted": false
-    },
-    {
       "type": "njb:noise_slope",
       "noise_provider": {
         "seed": 50943832,

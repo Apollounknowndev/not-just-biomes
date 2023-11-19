@@ -2,11 +2,6 @@
   "feature": "njb:forest/fallen_log",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "forest",
-      "inverted": false
-    },
-    {
       "type": "minecraft:rarity_filter",
       "chance": 20
     },

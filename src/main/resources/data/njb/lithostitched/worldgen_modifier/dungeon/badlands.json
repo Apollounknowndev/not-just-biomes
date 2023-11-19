@@ -1,0 +1,10 @@
+{
+  "type": "lithostitched:add_features",
+  "predicate": {
+    "type": "njb:module_enabled",
+    "module": "dungeon"
+  },
+  "biomes": "#c:badlands",
+  "features": "njb:dungeon/badlands",
+  "step": "underground_structures"
+}

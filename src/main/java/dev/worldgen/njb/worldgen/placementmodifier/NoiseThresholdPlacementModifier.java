@@ -1,7 +1,7 @@
 package dev.worldgen.njb.worldgen.placementmodifier;
 
 import dev.worldgen.njb.registry.NJBPlacementModifiers;
-import dev.worldgen.njb.worldgen.util.SeededNoiseProvider;
+import dev.worldgen.njb.worldgen.SeededNoiseProvider;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.math.BlockPos;
@@ -40,11 +40,11 @@ public class NoiseThresholdPlacementModifier extends AbstractCountPlacementModif
         this.upperThreshold = upperThreshold;
         this.insideBounds = insideBounds;
         this.outsideBounds = outsideBounds;
-        this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new CheckedRandom(noiseProvider.seed)), noiseProvider.noiseParameters);
+        this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new CheckedRandom(noiseProvider.seed())), noiseProvider.noiseParameters());
     }
 
     protected int getCount(Random random, BlockPos pos) {
-        double d = this.noiseSampler.sample((double)pos.getX() * noiseProvider.xz_scale, (double)pos.getY() * noiseProvider.y_scale, (double)pos.getZ() * noiseProvider.xz_scale);
+        double d = this.noiseSampler.sample((double)pos.getX() * noiseProvider.xzScale(), (double)pos.getY() * noiseProvider.yScale(), (double)pos.getZ() * noiseProvider.xzScale());
         return d < this.upperThreshold && d > this.lowerThreshold ? this.insideBounds : this.outsideBounds;
     }
 

@@ -9,13 +9,11 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.gen.treedecorator.TreeDecorator;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 public class TrunkVines extends TreeDecorator {
-    public static final Codec<TrunkVines> CODEC = RecordCodecBuilder.create((instance) -> {
-        return instance.group(
-            Codec.floatRange(0.0F, 1.0F).fieldOf("probability").forGetter((treeDecorator) -> {
-                return treeDecorator.probability;
-            })
-        ).apply(instance, TrunkVines::new);
-    });
+    public static final Codec<TrunkVines> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+        Codec.floatRange(0.0F, 1.0F).fieldOf("probability").forGetter((treeDecorator) -> {
+            return treeDecorator.probability;
+        })
+    ).apply(instance, TrunkVines::new));
     private final float probability;
 
     public TrunkVines(float probability) {

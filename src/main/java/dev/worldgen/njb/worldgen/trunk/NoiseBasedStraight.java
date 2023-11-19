@@ -1,7 +1,7 @@
 package dev.worldgen.njb.worldgen.trunk;
 
 import dev.worldgen.njb.registry.NJBTrunkPlacers;
-import dev.worldgen.njb.worldgen.util.SeededNoiseProvider;
+import dev.worldgen.njb.worldgen.SeededNoiseProvider;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -51,7 +51,7 @@ public class NoiseBasedStraight extends TrunkPlacer {
         this.randomHeight = randomHeight;
         this.trunkType = trunkType;
         this.noiseProvider = noiseProvider;
-        this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new CheckedRandom(noiseProvider.seed)), noiseProvider.noiseParameters);
+        this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new CheckedRandom(noiseProvider.seed())), noiseProvider.noiseParameters());
 
     }
 
@@ -62,7 +62,7 @@ public class NoiseBasedStraight extends TrunkPlacer {
     public List<FoliagePlacer.TreeNode> generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, int height, BlockPos startPos, TreeFeatureConfig config) {
         setToDirt(world, replacer, random, startPos.down(), config);
 
-        double i = this.noiseSampler.sample((double)startPos.getX() * noiseProvider.xz_scale, (double)startPos.getY() * noiseProvider.y_scale, (double)startPos.getZ() * noiseProvider.xz_scale);
+        double i = this.noiseSampler.sample((double)startPos.getX() * noiseProvider.xzScale(), (double)startPos.getY() * noiseProvider.yScale(), (double)startPos.getZ() * noiseProvider.xzScale());
         int trunkHeight = Math.toIntExact(Math.min(Math.max(Math.round(((float)(this.maximumHeight-this.minimumHeight)/2)*i+((float)(this.minimumHeight+this.maximumHeight)/2)),this.minimumHeight),this.maximumHeight))+ random.nextInt(this.randomHeight+1);
 
         if (this.trunkType == TrunkType.DEFAULT) {

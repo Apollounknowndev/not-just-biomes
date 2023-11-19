@@ -2,11 +2,6 @@
   "feature": "njb:taiga/fallen_log",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "taiga",
-      "inverted": false
-    },
-    {
       "type": "minecraft:rarity_filter",
       "chance": 20
     },

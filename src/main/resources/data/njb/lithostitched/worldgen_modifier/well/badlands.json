@@ -1,0 +1,10 @@
+{
+  "type": "lithostitched:add_features",
+  "predicate": {
+    "type": "njb:module_enabled",
+    "module": "well"
+  },
+  "biomes": "#c:badlands",
+  "features": "njb:well/badlands",
+  "step": "surface_structures"
+}

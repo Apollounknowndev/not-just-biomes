@@ -1,0 +1,15 @@
+{
+  "type": "lithostitched:add_features",
+  "predicate": {
+    "type": "njb:module_enabled",
+    "module": "cherry_grove"
+  },
+  "biomes": "minecraft:cherry_grove",
+  "features": [
+    "njb:cherry_grove/azalea_bush",
+    "njb:cherry_grove/bamboo",
+    "njb:cherry_grove/block_patch",
+    "njb:cherry_grove/flowers"
+  ],
+  "step": "vegetal_decoration"
+}

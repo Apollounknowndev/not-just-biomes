@@ -25,8 +25,6 @@ public class NJBConfiguredFeatures {
     public static final Feature<WellConfig> WELL = register(
         registry, "well", new WellFeature(WellConfig.CODEC)
     );
-    public static final Feature<OreVeinConfig> ORE_VEIN = register(
-        registry, "ore_vein", new OreVeinFeature(OreVeinConfig.CODEC)
-    );
+
     public static void init() {}
 }

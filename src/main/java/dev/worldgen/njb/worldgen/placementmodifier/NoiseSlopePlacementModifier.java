@@ -2,7 +2,7 @@ package dev.worldgen.njb.worldgen.placementmodifier;
 
 import dev.worldgen.njb.config.ConfigHandler;
 import dev.worldgen.njb.registry.NJBPlacementModifiers;
-import dev.worldgen.njb.worldgen.util.SeededNoiseProvider;
+import dev.worldgen.njb.worldgen.SeededNoiseProvider;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.math.BlockPos;
@@ -12,7 +12,6 @@ import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.util.math.random.CheckedRandom;
 import net.minecraft.util.math.random.ChunkRandom;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.gen.noise.NoiseConfig;
 import net.minecraft.world.gen.placementmodifier.AbstractCountPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.PlacementModifierType;
 public class NoiseSlopePlacementModifier extends AbstractCountPlacementModifier {
@@ -45,7 +44,7 @@ public class NoiseSlopePlacementModifier extends AbstractCountPlacementModifier 
     private final IntProvider moduleDisabledCount;
 
     private NoiseSlopePlacementModifier(SeededNoiseProvider noiseProvider, double noiseThreshold, int noiseCountMultiplier, int countOffset, boolean discardCheckIfModuleDisabled, String module, IntProvider moduleDisabledCount) {
-        this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new CheckedRandom(noiseProvider.seed)), noiseProvider.noiseParameters);
+        this.noiseSampler = DoublePerlinNoiseSampler.create(new ChunkRandom(new CheckedRandom(noiseProvider.seed())), noiseProvider.noiseParameters());
         this.noiseProvider = noiseProvider;
         this.noiseThreshold = noiseThreshold;
         this.noiseCountMultiplier = noiseCountMultiplier;
@@ -56,8 +55,8 @@ public class NoiseSlopePlacementModifier extends AbstractCountPlacementModifier 
     }
 
     protected int getCount(Random random, BlockPos pos) {
-        if (discardCheckIfModuleDisabled && !ConfigHandler.getConfigValue(module)) {return moduleDisabledCount.get(random);}
-        double d = this.noiseSampler.sample((double)pos.getX() * noiseProvider.xz_scale, (double)pos.getY() * noiseProvider.y_scale, (double)pos.getZ() * noiseProvider.xz_scale);
+        if (discardCheckIfModuleDisabled && !ConfigHandler.isModuleEnabled(module)) {return moduleDisabledCount.get(random);}
+        double d = this.noiseSampler.sample((double)pos.getX() * noiseProvider.xzScale(), (double)pos.getY() * noiseProvider.yScale(), (double)pos.getZ() * noiseProvider.xzScale());
         return d < this.noiseThreshold ? this.countOffset : this.countOffset+(int)Math.ceil((d - this.noiseThreshold) * (double)this.noiseCountMultiplier);
     }
 

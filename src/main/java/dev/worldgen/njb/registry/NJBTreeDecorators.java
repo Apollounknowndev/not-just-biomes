@@ -14,7 +14,7 @@ public class NJBTreeDecorators {
         registry, "branch_and_beehive", new TreeDecoratorType<>(BranchAndBeehive.CODEC)
     );
     public static final TreeDecoratorType<TrunkVines> TRUNK_VINES = register(
-            registry, "trunk_vines", new TreeDecoratorType<>(TrunkVines.CODEC)
+        registry, "trunk_vines", new TreeDecoratorType<>(TrunkVines.CODEC)
     );
 
     public static void init() {}

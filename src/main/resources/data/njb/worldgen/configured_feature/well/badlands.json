@@ -29,6 +29,10 @@
       "Name": "minecraft:suspicious_gravel"
     },
     "place_suspicious_block": true,
-    "suspicious_loot_table": "njb:well/badlands"
+    "suspicious_loot_table": "njb:well/badlands",
+    "entity_chance": 0.3,
+    "entity": [
+      "minecraft:camel"
+    ]
   }
 }

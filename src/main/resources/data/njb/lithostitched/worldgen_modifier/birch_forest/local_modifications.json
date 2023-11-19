@@ -1,0 +1,10 @@
+{
+  "type": "lithostitched:add_features",
+  "predicate": {
+    "type": "njb:module_enabled",
+    "module": "birch_forest"
+  },
+  "biomes": "#c:birch_forest",
+  "features": "njb:birch_forest/rock",
+  "step": "local_modifications"
+}

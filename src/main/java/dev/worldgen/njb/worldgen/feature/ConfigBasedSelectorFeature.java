@@ -22,6 +22,6 @@ public class ConfigBasedSelectorFeature extends Feature<ConfigBasedSelectorConfi
         StructureWorldAccess structureWorldAccess = context.getWorld();
         ChunkGenerator chunkGenerator = context.getGenerator();
         BlockPos blockPos = context.getOrigin();
-        return (ConfigHandler.getConfigValue(config.module) ? config.moduleEnabledFeature : config.moduleDisabledFeature).value().generateUnregistered(structureWorldAccess, chunkGenerator, random, blockPos);
+        return (ConfigHandler.isModuleEnabled(config.module) ? config.moduleEnabledFeature : config.moduleDisabledFeature).value().generateUnregistered(structureWorldAccess, chunkGenerator, random, blockPos);
     }
 }

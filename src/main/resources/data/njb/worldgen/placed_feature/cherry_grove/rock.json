@@ -1,0 +1,54 @@
+{
+  "feature": "njb:cherry_grove/cobble_rock",
+  "placement": [
+    {
+      "type": "njb:noise_slope",
+      "noise_provider": {
+        "seed": 23586234,
+        "noise": {
+          "firstOctave": -7,
+          "amplitudes": [
+            1,
+            1
+          ]
+        },
+        "xz_scale": 0.75
+      },
+      "noise_threshold": -0.758,
+      "slope": 44
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 150
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "njb:noise_threshold",
+      "noise_provider": {
+        "seed": 2348563,
+        "noise": {
+          "firstOctave": -8,
+          "amplitudes": [
+            1,
+            1,
+            1
+          ]
+        },
+        "xz_scale": 0.75
+      },
+      "lower_threshold": -0.2,
+      "upper_threshold": 0.2,
+      "inside_bounds": 0,
+      "outside_bounds": 1
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING_NO_LEAVES"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

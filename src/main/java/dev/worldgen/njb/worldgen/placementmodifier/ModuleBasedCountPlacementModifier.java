@@ -36,7 +36,7 @@ public class ModuleBasedCountPlacementModifier extends AbstractCountPlacementMod
     }
 
     protected int getCount(Random random, BlockPos pos) {
-        return ConfigHandler.getConfigValue(module) ? this.moduleEnabledCount.get(random) : this.moduleDisabledCount.get(random);
+        return ConfigHandler.isModuleEnabled(module) ? this.moduleEnabledCount.get(random) : this.moduleDisabledCount.get(random);
     }
 
     public PlacementModifierType<?> getType() {

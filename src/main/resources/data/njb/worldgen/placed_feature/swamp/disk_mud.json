@@ -2,11 +2,6 @@
   "feature": "njb:swamp/disk_mud",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "swamp",
-      "inverted": false
-    },
-    {
       "type": "minecraft:count",
       "count": 4
     },

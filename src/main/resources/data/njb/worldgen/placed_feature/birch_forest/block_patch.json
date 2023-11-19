@@ -2,11 +2,6 @@
   "feature": "njb:shared/block_patch/block_patch",
   "placement": [
     {
-      "type": "njb:config",
-      "module": "birch_forest",
-      "inverted": false
-    },
-    {
       "type": "minecraft:rarity_filter",
       "chance": 3
     },

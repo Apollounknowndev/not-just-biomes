@@ -1,95 +1,76 @@
 package dev.worldgen.njb.config;
 
+import com.mojang.serialization.JsonOps;
 import dev.worldgen.njb.NotJustBiomes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.fabricmc.loader.api.FabricLoader;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 
 public class ConfigHandler {
     private static final Path FILE_PATH = FabricLoader.getInstance().getConfigDir().resolve("not-just-biomes.json");
 
-    public static final Map<String, Boolean> DEFAULT_CONFIG_VALUES = new LinkedHashMap<>(){
-        {
-            put("birch_forest", true);
-            put("cherry_grove", true);
-            put("dungeon", true);
-            put("forest", true);
-            put("mansion", true);
-            put("ore_vein", true);
-            put("swamp", true);
-            put("taiga", true);
-            put("well", true);
-        }
-    };
+    public static final ConfigCodec DEFAULT_CONFIG = new ConfigCodec(
+        Map.of(
+            "birch_forest", true,
+            "cherry_grove", true,
+            "dungeon", true,
+            "forest", true,
+            "ore_vein", true,
+            "swamp", true,
+            "taiga", true,
+            "well", true
+        ),
+        Map.of(
+            "tectonic_trees", false
+        )
+    );
 
-    static Map<String, Boolean> CONFIG_VALUES = new HashMap<>();
-    public static void loadOrCreateDefaultConfig() {
+    private static ConfigCodec CONFIG;
+    public static void load() {
         if (!Files.isRegularFile(FILE_PATH)) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             NotJustBiomes.LOGGER.info("Config file for Not Just Biomes not found, creating file with default values...");
             try(BufferedWriter writer = Files.newBufferedWriter(FILE_PATH)) {
-                writer.write("{}");
+                writer.write(gson.toJson(ConfigCodec.CODEC.encodeStart(JsonOps.INSTANCE, DEFAULT_CONFIG).result().get()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
         try (BufferedReader reader = Files.newBufferedReader(FILE_PATH)) {
             JsonElement json = JsonParser.parseReader(reader);
-            JsonObject jsonObject = json.getAsJsonObject().getAsJsonObject("enabled_modules");
-            if (jsonObject != null) {
-                for (Map.Entry<String, JsonElement> configValues : jsonObject.entrySet()) {
-                    if (DEFAULT_CONFIG_VALUES.containsKey(configValues.getKey()) || Objects.equals(configValues.getKey(), "tectonic_trees")) {
-                        String key = configValues.getKey();
-                        Boolean value = configValues.getValue().getAsBoolean();
-                        CONFIG_VALUES.put(key, value);
-                    }
-                }
+            Optional<ConfigCodec> result = ConfigCodec.CODEC.parse(JsonOps.INSTANCE, json).result();
+            if (result.isEmpty()) {
+                result = Optional.of(DEFAULT_CONFIG);
             }
-            for (Map.Entry<String, Boolean> defaultConfigValues : DEFAULT_CONFIG_VALUES.entrySet()) {
-                CONFIG_VALUES.putIfAbsent(defaultConfigValues.getKey(), defaultConfigValues.getValue());
-            }
-            if (NotJustBiomes.isTectonicLoaded) {
-                CONFIG_VALUES.putIfAbsent("tectonic_trees", false);
-            }
-            writeToFile(CONFIG_VALUES);
+            CONFIG = result.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        writeToFile(CONFIG);
     }
 
-    public static boolean getConfigValue(String key) {
-        boolean value = false;
-        if (CONFIG_VALUES.containsKey(key)) {
-            value = CONFIG_VALUES.get(key);
-        } else if (DEFAULT_CONFIG_VALUES.containsKey(key)) {
-            value = DEFAULT_CONFIG_VALUES.get(key);
-        }
-        return value;
+    public static ConfigCodec getConfig() {
+        return CONFIG;
     }
 
-    public static void writeToFile(Map<String, Boolean> input) {
+    public static Boolean isModuleEnabled(String key) {
+        return CONFIG.isModuleEnabled(key);
+    }
+
+    public static void writeToFile(ConfigCodec input) {
         try(BufferedWriter writer = Files.newBufferedWriter(FILE_PATH)) {
-            Map<String, Object> map = new LinkedHashMap<>();
-            map.put("enabled_modules", input);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            writer.write(gson.toJson(map));
+            writer.write(gson.toJson(ConfigCodec.CODEC.encodeStart(JsonOps.INSTANCE, input).result().get()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void flipValue(String key) {
-        CONFIG_VALUES.put(key, !CONFIG_VALUES.get(key));
-        writeToFile(CONFIG_VALUES);
     }
 }

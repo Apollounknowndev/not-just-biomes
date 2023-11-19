@@ -30,7 +30,7 @@ public class ConfigPlacementModifier extends AbstractConditionalPlacementModifie
     }
     @Override
     protected boolean shouldPlace(FeaturePlacementContext context, Random random, BlockPos pos) {
-        return this.inverted != ConfigHandler.getConfigValue(module);
+        return this.inverted != ConfigHandler.isModuleEnabled(module);
     }
 
     @Override

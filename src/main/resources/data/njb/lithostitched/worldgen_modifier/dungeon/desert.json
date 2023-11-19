@@ -1,0 +1,10 @@
+{
+  "type": "lithostitched:add_features",
+  "predicate": {
+    "type": "njb:module_enabled",
+    "module": "dungeon"
+  },
+  "biomes": "#c:desert",
+  "features": "njb:dungeon/desert",
+  "step": "underground_structures"
+}
